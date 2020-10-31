@@ -37,7 +37,7 @@ jobs:
       - name: build
         run: |
           yarn build
-          echo > dist/.nojekyll
+          echo > public/.nojekyll
 
       - name: deploy
         uses: s0/git-publish-subdir-action@master
