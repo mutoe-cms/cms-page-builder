@@ -2,8 +2,10 @@
 import FullWidthModule from './FullWidthModule.svelte'
 
 const pageConfig: UI.PageConfig = {
+  id: '',
   sections: [
     {
+      id: '',
       type: 'full-width',
       module: {
         type: 'full-width-header',
@@ -25,7 +27,6 @@ const pageConfig: UI.PageConfig = {
   ],
 }
 </script>
-
 
 <div class="page-container">
   {#each pageConfig.sections as section}

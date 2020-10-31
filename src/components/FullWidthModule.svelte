@@ -7,7 +7,7 @@
 <script lang="ts">
 import FullWidthHeader from './fullWidthModules/FullWidthHeader.svelte'
 
-export let module: UI.FullWidthModule
+export let module: UI.Module
 </script>
 
 <style lang="scss"></style>

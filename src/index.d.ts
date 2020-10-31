@@ -39,15 +39,12 @@ declare namespace UI {
 
   type FullWidthModuleType = 'full-width-header'
 
-  interface Module {
+  interface ModuleBase {
     id: string
-    type: FullWidthModule
     style?: CSSStyleDeclaration
   }
 
-  interface FullWidthModule extends Module {}
-
-  interface FullWidthHeaderModule extends FullWidthModule {
+  interface FullWidthHeaderModule extends ModuleBase {
     type: 'full-width-header'
     title?: string
     subTitle?: string
@@ -55,6 +52,8 @@ declare namespace UI {
     button2?: Button
     body?: string
   }
+
+  type Module = FullWidthHeaderModule
 
   interface Button {
     text: string
