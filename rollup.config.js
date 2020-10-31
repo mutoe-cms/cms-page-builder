@@ -67,7 +67,7 @@ export default {
       outDir: 'public/build'
     }),
     typescript({
-      sourceMap: !production,
+      sourceMap: true,
       inlineSources: !production,
     }),
 
