@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { styleToString } from 'src/utils'
-import Button from '../button/Button.svelte'
+import Button from '../Button.svelte'
 
 export let module: UI.FullWidthHeaderModule
 </script>

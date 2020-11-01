@@ -1,41 +1,25 @@
-<script lang="ts">
-import FullWidthModule from './FullWidthModule.svelte'
+<template>
+  <div class="page-builder">
+    <div class="page-container">
+      {#each pageConfig.sections as section}
+        {#if section.type === 'full-width'}
+          <FullWidthSection section={section} />
+        {/if}
+      {/each}
+    </div>
 
-const pageConfig: UI.PageConfig = {
-  id: '',
-  sections: [
-    {
-      id: '',
-      type: 'full-width',
-      module: {
-        type: 'full-width-header',
-        title: 'Lorem ipsum',
-        subTitle: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ',
-        body: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ad aut debitis dicta exercitationem expedita laudantium magni modi molestiae necessitatibus nisi nobis non, praesentium reiciendis, repellat suscipit ut velit voluptas.',
-        button1: {
-          text: 'Goto'
-        },
-        button2: {
-          text: 'Link',
-          link: 'https://google.com'
-        },
-        style: {
-          backgroundColor: '#7ebec5'
-        }
-      },
-    },
-  ],
-}
+    <SectionOperator />
+  </div>
+</template>
+
+<script lang="ts">
+import SectionOperator from './SectionOperator.svelte'
+import FullWidthSection from './FullWidthSection.svelte'
+import pageConfig from '../examplePageConfig'
 </script>
 
-<div class="page-container">
-  {#each pageConfig.sections as section}
-    {#if section.type === 'full-width'}
-      <FullWidthModule module={section.module} />
-    {/if}
-  {/each}
-</div>
-
-<style>
-
+<style lang="scss">
+.page-builder {
+    position: relative;
+}
 </style>

@@ -15,10 +15,11 @@ body {
   font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, button {
   margin-top: 0;
-  line-height: 1em;
+  margin-bottom: 0;
   font-weight: 500;
+  line-height: 1em;
 }
 
 h1 {
@@ -57,6 +58,11 @@ p {
   margin-bottom: 12px;
 }
 
+button {
+  cursor: pointer;
+}
+
 ion-icon {
   vertical-align: -4px;
 }
+
