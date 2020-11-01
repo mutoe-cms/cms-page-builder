@@ -3,7 +3,7 @@
     <div class="border"></div>
 
     <div class="section-menu">
-      <button class="move">
+      <button class="move" draggable="true" on:dragend={onDragEnd} on:dragstart={onDratStart}>
         <ion-icon name="move-sharp"></ion-icon>
       </button>
       <button class="settings">
@@ -21,37 +21,55 @@
       <ion-icon name="add-sharp"></ion-icon>
     </button>
   </div>
+
+  <div class="drag-over-placeholder"
+    style={styleToString({...dragOverRect, height: dragOverPlaceholderHeight + "px"})}></div>
 </template>
 
 <script lang="ts">
-import { currentSection } from '../stores/currentSection'
 import { cloneDeep, generateId, styleToString } from 'src/utils'
+import { createEventDispatcher } from 'svelte'
+import { currentDragOverSection, currentDragSection, currentSection } from '../stores/currentSection'
 import { pageConfig } from '../stores/pageConfig'
 
+const dragOverPlaceholderHeight = 48
+
 let borderRect: Partial<CSSStyleDeclaration> = {
-  left: '0',
   top: '0',
-  width: '100%',
   height: '0',
   opacity: '0',
 }
+let dragOverRect: Partial<CSSStyleDeclaration> = {
+  top: '0',
+  opacity: '0',
+}
 
-let currentSectionValue: UI.Section | null
 currentSection.subscribe(section => {
-  currentSectionValue = section
-  if (!section) return
-  const element = document.querySelector(`#section-${section.id}`) as HTMLElement
+  if (!section || $currentDragSection) return borderRect = {}
 
-  borderRect.left = element.offsetLeft + 'px'
-  borderRect.top = element.offsetTop + 'px'
-  borderRect.width = element.offsetWidth + 'px'
-  borderRect.height = element.offsetHeight + 'px'
-  borderRect.opacity = element ? '1' : '0'
+  dragOverRect = {}
+  const element = document.querySelector(`#section-${section.id}`) as HTMLElement
+  borderRect = {
+    top: element.offsetTop + 'px',
+    height: element.offsetHeight + 'px',
+    opacity: element ? '1' : '0',
+  }
+})
+currentDragOverSection.subscribe(({ section, isTop }) => {
+  if (!section || !$currentDragSection) return dragOverRect = {}
+
+  const element = document.querySelector(`#section-${section.id}`) as HTMLElement
+  let offsetTop = element.offsetTop
+  if (!isTop) offsetTop += element.offsetHeight - dragOverPlaceholderHeight
+  dragOverRect = {
+    top: offsetTop + 'px',
+    opacity: '1',
+  }
 })
 
 function onDuplicate() {
   pageConfig.update(config => {
-    const targetIndex = config.sections.findIndex(it => it.id === currentSectionValue?.id)
+    const targetIndex = config.sections.findIndex(it => it.id === $currentSection?.id)
     if (targetIndex === -1) return config
     let regularSection = cloneDeep(config.sections[targetIndex])
     regularSection.id = generateId()
@@ -62,20 +80,35 @@ function onDuplicate() {
 
 function onDelete() {
   pageConfig.update(config => {
-    const targetIndex = config.sections.findIndex(it => it.id === currentSectionValue?.id)
+    const targetIndex = config.sections.findIndex(it => it.id === $currentSection?.id)
     if (targetIndex === -1) return config
     config.sections.splice(targetIndex, 1)
-    borderRect = {
-      width: '100%',
-    }
+    borderRect = {}
     return config
   })
 }
+
+const dispatch = createEventDispatcher()
+
+async function onDratStart(event: DragEvent) {
+  let sectionElement = document.querySelector(`#section-${$currentSection?.id}`)
+  event.dataTransfer.setDragImage(sectionElement, 0, 0)
+  setTimeout(() => {
+    dispatch('dragstart', $currentSection)
+  })
+}
+
+function onDragEnd() {
+  dispatch('dragend')
+}
+
 </script>
 
 <style lang="scss">
 .section-operator {
   position: absolute;
+  right: 0;
+  left: 0;
   opacity: 0;
   transition: all .2s ease-out;
   pointer-events: none;
@@ -137,5 +170,13 @@ function onDelete() {
       transform: scale(1.2, 1.2);
     }
   }
+}
+
+.drag-over-placeholder {
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: rgba(#fff, .2);
+  transition: all .2s ease;
 }
 </style>

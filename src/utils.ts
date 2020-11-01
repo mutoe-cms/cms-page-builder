@@ -12,3 +12,39 @@ export function generateId(): string {
 export function cloneDeep<T = any>(obj: T): T {
   return JSON.parse(JSON.stringify(obj))
 }
+
+export function debounce(fn: Function, wait: number) {
+  let timer = null
+
+  function debounced() {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.apply(this, arguments)
+    }, wait)
+  }
+
+  return debounced
+}
+
+export function throttle(fn: Function, wait: number) {
+  let timer = null
+  let firstInvoke = true
+
+  function throttled() {
+    if (firstInvoke) {
+      fn.apply(this, arguments)
+      firstInvoke = false
+      return
+    }
+
+    if (timer) return
+    timer = setTimeout(() => {
+      clearTimeout(timer)
+      timer = null
+
+      fn.apply(this, arguments)
+    }, wait)
+  }
+
+  return throttled
+}
