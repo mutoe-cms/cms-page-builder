@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store'
 
-export const currentSection = writable<HTMLElement | null>(null)
+export const currentSection = writable<UI.Section>(null)

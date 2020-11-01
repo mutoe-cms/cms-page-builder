@@ -1,7 +1,7 @@
 <template>
   <div class="page-builder">
     <div class="page-container">
-      {#each pageConfig.sections as section}
+      {#each localPageConfig.sections as section (section.id)}
         {#if section.type === 'full-width'}
           <FullWidthSection section={section} />
         {/if}
@@ -13,9 +13,18 @@
 </template>
 
 <script lang="ts">
+import examplePageConfig from '../examplePageConfig'
+import { pageConfig } from '../stores/pageConfig'
 import SectionOperator from './SectionOperator.svelte'
 import FullWidthSection from './FullWidthSection.svelte'
-import pageConfig from '../examplePageConfig'
+
+pageConfig.set(examplePageConfig)
+
+let localPageConfig: UI.PageConfig
+
+pageConfig.subscribe(config => {
+  localPageConfig = config
+})
 </script>
 
 <style lang="scss">

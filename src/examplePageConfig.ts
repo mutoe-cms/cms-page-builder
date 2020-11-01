@@ -1,4 +1,4 @@
-const pageConfig: UI.PageConfig = {
+const examplePageConfig: UI.PageConfig = {
   id: '',
   sections: [
     {
@@ -44,4 +44,4 @@ const pageConfig: UI.PageConfig = {
   ],
 }
 
-export default pageConfig
+export default examplePageConfig

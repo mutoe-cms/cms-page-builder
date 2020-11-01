@@ -1,6 +1,7 @@
 <template>
   <div class="section-operator" style={styleToString(borderRect)}>
     <div class="border"></div>
+
     <div class="section-menu">
       <button class="move">
         <ion-icon name="move-sharp"></ion-icon>
@@ -8,10 +9,10 @@
       <button class="settings">
         <ion-icon name="settings-sharp"></ion-icon>
       </button>
-      <button class="duplicate">
+      <button class="duplicate" on:click={onDuplicate}>
         <ion-icon name="duplicate-sharp"></ion-icon>
       </button>
-      <button class="delete">
+      <button class="delete" on:click={onDelete}>
         <ion-icon name="trash-sharp"></ion-icon>
       </button>
     </div>
@@ -24,17 +25,22 @@
 
 <script lang="ts">
 import { currentSection } from '../stores/currentSection'
-import { styleToString } from 'src/utils'
+import { cloneDeep, generateId, styleToString } from 'src/utils'
+import { pageConfig } from '../stores/pageConfig'
 
-const borderRect = {
+let borderRect: Partial<CSSStyleDeclaration> = {
   left: '0',
   top: '0',
-  width: '0',
+  width: '100%',
   height: '0',
   opacity: '0',
 }
-currentSection.subscribe(element => {
-  if (!element) return
+
+let currentSectionValue: UI.Section | null
+currentSection.subscribe(section => {
+  currentSectionValue = section
+  if (!section) return
+  const element = document.querySelector(`#section-${section.id}`) as HTMLElement
 
   borderRect.left = element.offsetLeft + 'px'
   borderRect.top = element.offsetTop + 'px'
@@ -42,6 +48,29 @@ currentSection.subscribe(element => {
   borderRect.height = element.offsetHeight + 'px'
   borderRect.opacity = element ? '1' : '0'
 })
+
+function onDuplicate() {
+  pageConfig.update(config => {
+    const targetIndex = config.sections.findIndex(it => it.id === currentSectionValue?.id)
+    if (targetIndex === -1) return config
+    let regularSection = cloneDeep(config.sections[targetIndex])
+    regularSection.id = generateId()
+    config.sections.splice(targetIndex, 0, regularSection)
+    return config
+  })
+}
+
+function onDelete() {
+  pageConfig.update(config => {
+    const targetIndex = config.sections.findIndex(it => it.id === currentSectionValue?.id)
+    if (targetIndex === -1) return config
+    config.sections.splice(targetIndex, 1)
+    borderRect = {
+      width: '100%',
+    }
+    return config
+  })
+}
 </script>
 
 <style lang="scss">
