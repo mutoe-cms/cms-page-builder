@@ -92,7 +92,12 @@ const dispatch = createEventDispatcher()
 
 async function onDratStart(event: DragEvent) {
   let sectionElement = document.querySelector(`#section-${$currentSection?.id}`)
-  event.dataTransfer.setDragImage(sectionElement, 0, 0)
+  if (!sectionElement) return
+  const elementTop = sectionElement.getBoundingClientRect().top + document.documentElement.scrollTop
+  const elementLeft = sectionElement.getBoundingClientRect().left + document.documentElement.scrollLeft
+  const offsetTop = event.pageY - elementTop
+  const offsetLeft = event.pageX - elementLeft
+  event.dataTransfer.setDragImage(sectionElement, offsetLeft, offsetTop)
   setTimeout(() => {
     dispatch('dragstart', $currentSection)
   })
@@ -109,6 +114,9 @@ function onDragEnd() {
   position: absolute;
   right: 0;
   left: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   opacity: 0;
   transition: all .2s ease-out;
   pointer-events: none;
@@ -124,11 +132,8 @@ function onDragEnd() {
   }
 
   .section-menu {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: flex;
-    padding: 4px;
+    padding: 12px;
     background-color: #2b87da;
     pointer-events: auto;
     border-radius: 3px;
