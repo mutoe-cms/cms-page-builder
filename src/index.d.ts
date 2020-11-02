@@ -1,7 +1,4 @@
-declare interface Block {
-  id: number
-  name: string
-}
+declare type JsonType = null | string | number | boolean | JsonType [] | { [key: string]: JsonType }
 
 declare namespace UI {
 
