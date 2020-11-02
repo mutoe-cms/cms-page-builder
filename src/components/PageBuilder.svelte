@@ -1,14 +1,16 @@
 <template>
   <div class="page-builder">
-    <div class="section-container"
-      on:dragenter={onDragEnter}
-      on:dragleave={onDragLeave}
-      on:dragover={throttle(onDragOver, 100)}
-      on:drop={onDrop}>
+    <div class="section-container" on:dragover={throttle(onDragOver, 100)}>
       {#each $pageConfig.sections as section (section.id)}
-        {#if section.type === 'full-width'}
-          <FullWidthSection section={section} />
-        {/if}
+        <section
+          id="section-{section.id}"
+          animate:flip={{duration: d => Math.sqrt(d) * 10, delay: 100}}
+          on:mouseenter={() => onSelectSection(section)}
+        >
+          {#if section.type === 'full-width'}
+            <FullWidthSection {section} />
+          {/if}
+        </section>
       {/each}
     </div>
 
@@ -18,6 +20,7 @@
 
 <script lang="ts">
 import { onMount } from 'svelte'
+import { flip } from 'svelte/animate'
 import examplePageConfig from '../examplePageConfig'
 import { currentDragOverSection, currentDragSection, currentSection } from '../stores/currentSection'
 import { pageConfig } from '../stores/pageConfig'
@@ -30,6 +33,10 @@ pageConfig.set(examplePageConfig)
 onMount(() => {
   document.addEventListener('dragover', e => void e.preventDefault())
 })
+
+function onSelectSection(section: UI.Section) {
+  currentSection.set(section)
+}
 
 function onDragStart(event: CustomEvent<UI.Section>) {
   const index = $pageConfig.sections.findIndex(it => it === event.detail)
@@ -53,25 +60,14 @@ function onDragEnd(event: CustomEvent) {
   currentDragSection.set(null)
 }
 
-function onDragEnter(event: DragEvent) {
-  console.log(event)
-}
-
 function onDragOver(event: DragEvent) {
   const sectionElement = (event.target as HTMLElement)?.closest('section')
+  if (!sectionElement) return
   const topThreshold = sectionElement.offsetTop + sectionElement.offsetHeight / 2
   const isTop = event.clientY < topThreshold
   const sectionId = sectionElement?.id.replace(/^section-/, '')
   const section = $pageConfig.sections.find(it => it.id === sectionId) ?? null
   currentDragOverSection.set({ section, isTop })
-}
-
-function onDragLeave(event: DragEvent) {
-  console.log(event)
-}
-
-function onDrop(event: DragEvent) {
-  console.log(event)
 }
 </script>
 
