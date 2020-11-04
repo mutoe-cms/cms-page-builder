@@ -3,21 +3,25 @@
     <div class="border"></div>
 
     <div class="section-menu">
-      <button class="move" draggable="true" on:dragend={onDragEnd} on:dragstart={onDratStart}>
+      <button aria-label="Handle" class="move"
+        draggable="true"
+        on:dragend={onDragEnd}
+        on:dragstart={onDratStart}
+      >
         <ion-icon name="move-sharp"></ion-icon>
       </button>
-      <button class="settings">
+      <button aria-label="Settings" class="settings">
         <ion-icon name="settings-sharp"></ion-icon>
       </button>
-      <button class="duplicate" on:click={onDuplicate}>
+      <button aria-label="Duplicate" class="duplicate" on:click={onDuplicate}>
         <ion-icon name="duplicate-sharp"></ion-icon>
       </button>
-      <button class="delete" on:click={onDelete}>
+      <button aria-label="Delete" class="delete" on:click={onDelete}>
         <ion-icon name="trash-sharp"></ion-icon>
       </button>
     </div>
 
-    <button class="add-section">
+    <button aria-label="Add section" class="add-section">
       <ion-icon name="add-sharp"></ion-icon>
     </button>
   </div>

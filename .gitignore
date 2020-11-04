@@ -4,3 +4,4 @@ node_modules
 *error.log
 public/build
 coverage
+cypress/videos
