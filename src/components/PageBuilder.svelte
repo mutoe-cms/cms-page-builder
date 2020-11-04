@@ -39,7 +39,7 @@ function onSelectSection(section: UI.Section) {
 }
 
 function onDragStart(event: CustomEvent<UI.Section>) {
-  const index = $pageConfig.sections.findIndex(it => it === event.detail)
+  const index = $pageConfig.sections.findIndex((it => it === event.detail))
   currentDragSection.set($pageConfig.sections[index])
   currentSection.set(null)
   pageConfig.update(config => {

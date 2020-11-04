@@ -10,7 +10,7 @@
       >
         <ion-icon name="move-sharp"></ion-icon>
       </button>
-      <button aria-label="Settings" class="settings">
+      <button aria-label="Settings" class="settings" on:click={onModalOpen}>
         <ion-icon name="settings-sharp"></ion-icon>
       </button>
       <button aria-label="Duplicate" class="duplicate" on:click={onDuplicate}>
@@ -28,15 +28,26 @@
 
   <div class="drag-over-placeholder"
     style={styleToString({...dragOverRect, height: dragOverPlaceholderHeight + "px"})}></div>
+
+  {#if modal}
+    <Modal on:close={onModalClose}>
+      You selected section {currentModalSection.id}
+      (<a href="#section-{currentModalSection.id}">{currentModalSection.id}</a>)
+    </Modal>
+  {/if}
 </template>
 
 <script lang="ts">
-import { cloneDeep, generateId, styleToString } from 'src/utils'
 import { createEventDispatcher } from 'svelte'
+import { cloneDeep, generateId, styleToString } from 'src/utils'
+import Modal from './Modal.svelte'
 import { currentDragOverSection, currentDragSection, currentSection } from '../stores/currentSection'
 import { pageConfig } from '../stores/pageConfig'
 
 const dragOverPlaceholderHeight = 48
+
+let modal = false
+let currentModalSection: UI.Section
 
 let borderRect: Partial<CSSStyleDeclaration> = {
   top: '0',
@@ -49,8 +60,10 @@ let dragOverRect: Partial<CSSStyleDeclaration> = {
 }
 
 currentSection.subscribe(section => {
+  if (modal) return
   if (!section || $currentDragSection) return borderRect = {}
 
+  currentModalSection = section
   dragOverRect = {}
   const element = document.querySelector(`#section-${section.id}`) as HTMLElement
   borderRect = {
@@ -90,6 +103,15 @@ function onDelete() {
     borderRect = {}
     return config
   })
+}
+
+function onModalOpen() {
+  modal = true
+}
+
+function onModalClose() {
+  modal = false
+  currentModalSection = null
 }
 
 const dispatch = createEventDispatcher()

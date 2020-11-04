@@ -50,7 +50,9 @@ declare namespace UI {
     body?: string
   }
 
-  type Module = FullWidthHeaderModule
+  type FullWidthModule = FullWidthHeaderModule
+
+  type Module = FullWidthModule
 
   interface Button {
     text: string
