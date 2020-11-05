@@ -38,7 +38,7 @@ declare namespace UI {
 
   interface ModuleBase {
     id: string
-    style?: CSSStyleDeclaration
+    style?: Partial<CSSStyleDeclaration>
   }
 
   interface FullWidthHeaderModule extends ModuleBase {

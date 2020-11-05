@@ -154,13 +154,13 @@ function onDragEnd() {
     bottom: 0;
     left: 0;
     pointer-events: none;
-    border: 4px solid #2b87da;
+    border: 4px solid $blue;
   }
 
   .section-menu {
     display: flex;
     padding: 12px;
-    background-color: #2b87da;
+    background-color: $blue;
     pointer-events: auto;
     border-radius: 3px;
 
@@ -190,7 +190,7 @@ function onDragEnd() {
     padding: 0;
     color: #fff;
     font-size: 30px;
-    background-color: #2b87da;
+    background-color: $blue;
     transition: all .2s;
     pointer-events: auto;
     border: none;

@@ -64,7 +64,7 @@ export default {
       baseUrl: '.',
       paths: {},
       rootDir: 'src',
-      outDir: 'public/build'
+      outDir: 'public/build',
     }),
     typescript({
       sourceMap: true,
