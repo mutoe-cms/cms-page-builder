@@ -46,8 +46,16 @@ import { pageConfig } from '../stores/pageConfig'
 
 const dragOverPlaceholderHeight = 48
 
-let modal = false
-let currentModalSection: UI.Section
+let modal = true
+let currentModalSection: UI.Section = $pageConfig.sections[0]
+function onModalOpen() {
+  modal = true
+}
+function onModalClose() {
+  modal = false
+  currentModalSection = null
+}
+
 
 let borderRect: Partial<CSSStyleDeclaration> = {
   top: '0',
@@ -105,14 +113,6 @@ function onDelete() {
   })
 }
 
-function onModalOpen() {
-  modal = true
-}
-
-function onModalClose() {
-  modal = false
-  currentModalSection = null
-}
 
 const dispatch = createEventDispatcher()
 

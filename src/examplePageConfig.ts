@@ -5,6 +5,7 @@ const examplePageConfig: UI.PageConfig = {
       id: 'd74dlnwmuy4',
       type: 'full-width',
       module: {
+        id: '92n3udn8f',
         type: 'full-width-header',
         title: 'Lorem ipsum',
         subTitle: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ',
@@ -25,6 +26,7 @@ const examplePageConfig: UI.PageConfig = {
       id: '0p0yuehcmuq',
       type: 'full-width',
       module: {
+        id: 'lsd8cksjd',
         type: 'full-width-header',
         title: '标题 Lorem ipsum',
         subTitle: '副标题 Lorem ipsum dolor sit amet, consectetur adipisicing elit. ',
@@ -45,6 +47,7 @@ const examplePageConfig: UI.PageConfig = {
       id: 'dn38wanlnfj',
       type: 'full-width',
       module: {
+        id: '89vj2j28d',
         type: 'full-width-header',
         title: 'Lorem ipsum',
         subTitle: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ',
