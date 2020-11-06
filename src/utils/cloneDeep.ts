@@ -1,3 +1,1 @@
-export default function cloneDeep<T = any>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj))
-}
+export const cloneDeep = <T = any>(obj: T): T => JSON.parse(JSON.stringify(obj))
