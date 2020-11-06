@@ -1,8 +1,14 @@
-<svelte:window on:keydown={onKeyDown} />
+<svelte:window on:keydown={onKeyDown} on:mousemove={onMouseMove} on:mouseup={onMouseUp} />
 
 <template>
-  <div class="modal" role="dialog" aria-label="Modal" aria-modal="true">
-    <header>
+  <div class="modal"
+    role="dialog"
+    aria-label="Modal"
+    aria-modal="true"
+    bind:this={modal}
+    style={styleToString(modalStyle)}
+  >
+    <header on:mousedown={onMouseDown}>
       <h2>Section Settings</h2>
     </header>
 
@@ -12,7 +18,7 @@
           <button role="tab"
             id="tab-{i}"
             aria-controls="panel-{i}"
-            aria-selected="{i === currentTab}"
+            aria-selected={i === currentTab}
             tabindex="{i === currentTab ? -1 : 0}"
             on:click={() => currentTab = i}
           >{tab.title}</button>
@@ -25,21 +31,22 @@
           tabindex="0"
           hidden={i !== currentTab}>
           {tab.content}
+          {JSON.stringify(modalStyle)}
         </div>
       {/each}
     </div>
 
     <div class="button-group">
-      <button aria-label="Close modal" class="close" on:click={close}>
+      <button aria-label="Close modal" class="close" title="Close" on:click={close}>
         <ion-icon name="close-outline"></ion-icon>
       </button>
-      <button aria-label="Undo" class="undo">
+      <button aria-label="Undo" class="undo" title="Undo">
         <ion-icon name="arrow-undo"></ion-icon>
       </button>
-      <button aria-label="Redo" class="redo">
+      <button aria-label="Redo" class="redo" title="Redo">
         <ion-icon name="arrow-redo"></ion-icon>
       </button>
-      <button aria-label="Save" class="save">
+      <button aria-label="Save" class="save" title="Save">
         <ion-icon name="checkmark-outline"></ion-icon>
       </button>
     </div>
@@ -47,7 +54,8 @@
 </template>
 
 <script lang="ts">
-import { createEventDispatcher } from 'svelte'
+import { createEventDispatcher, onMount, tick } from 'svelte'
+import { styleToString } from 'src/utils'
 
 let currentTab = 0
 const tabs = [
@@ -62,6 +70,35 @@ const close = () => dispatch('close')
 const onKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Escape') return close()
 }
+
+let modal: HTMLDivElement
+let draggingModal = false
+const modalStyle: { left?: number, top?: number, transition?: string } = {}
+
+onMount(() => {
+  const computedStyle = getComputedStyle(modal)
+  modalStyle.left = parseInt(computedStyle.left)
+  modalStyle.top = parseInt(computedStyle.top)
+})
+const onMouseDown = () => draggingModal = true
+const onMouseMove = (event: MouseEvent) => {
+  if (!draggingModal) return
+  modalStyle.left += event.movementX
+  modalStyle.top += event.movementY
+}
+const onMouseUp = async (event: MouseEvent) => {
+  draggingModal = false
+  const computedStyle = getComputedStyle(modal)
+  const halfWidth = parseInt(computedStyle.width) / 2
+  const halfHeight = parseInt(computedStyle.height) / 2
+  modalStyle.transition = 'all .1s ease-out'
+  setTimeout(() => {modalStyle.transition = undefined}, 100)
+  await tick()
+  if (modalStyle.left + event.movementX - halfWidth < 0) modalStyle.left = halfWidth
+  else if (modalStyle.left + event.movementX + halfWidth > window.innerWidth) modalStyle.left = window.innerWidth - halfWidth
+  if (modalStyle.top + event.movementY - halfHeight < 0) modalStyle.top = halfHeight
+  else if (modalStyle.top + event.movementY + halfHeight > window.innerHeight) modalStyle.top = window.innerHeight - halfHeight
+}
 </script>
 
 <style lang="scss">
@@ -73,16 +110,18 @@ const onKeyDown = (event: KeyboardEvent) => {
   max-width: 100vw;
   max-height: 100vh;
   background: white;
-  box-shadow: 0 5px 30px rgba(43, 135, 218, .2);
+  box-shadow: 0 5px 30px rgba(#000, 0.4);
   transform: translate(-50%, -50%);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 header {
   padding: 24px;
   color: #fff;
-  background-color: darken($purple, 20%);
+  background-color: #6c2eb9;
+  cursor: move;
+  user-select: none;
 
   h2 {
     margin-bottom: 0;
@@ -93,7 +132,7 @@ header {
 
 [role=tablist] {
   display: flex;
-  background-color: lighten($purple, 10%);
+  background-color: #7e3bd0;
 
   button {
     padding: 12px 24px;
@@ -103,11 +142,11 @@ header {
     border: none;
 
     &:hover, &:focus {
-      background-color: darken($purple, 10%);
+      background-color: #7435c1;
     }
 
     &[aria-selected='true'] {
-      background-color: $purple;
+      background-color: #8e42eb;
     }
   }
 }
