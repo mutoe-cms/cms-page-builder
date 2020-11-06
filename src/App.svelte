@@ -7,5 +7,5 @@ import PageBuilder from './components/PageBuilder.svelte'
 </script>
 
 <style lang="scss" global>
-@import 'src/style';
+@import 'src/assets/style';
 </style>
