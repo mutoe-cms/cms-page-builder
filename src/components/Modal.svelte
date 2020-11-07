@@ -60,7 +60,8 @@
 
 <script lang="ts">
 import { createEventDispatcher, onMount, tick } from 'svelte'
-import { styleToString } from 'src/utils'
+import { styleToString, getScrollbarWidth } from 'src/utils'
+import storage from '../storage'
 
 let currentTab = 0
 const tabs = [
@@ -79,20 +80,16 @@ const onKeyDown = (event: KeyboardEvent) => {
 let modal: HTMLDivElement
 let draggingModal = false
 let resizingModal = false
-let modalStyle: {
-  left?: number,
-  top?: number,
-  width?: number,
-  height?: number,
-  transition?: string
-} = {}
+const modalStyle: UI.ModalStyle = {}
 
 onMount(() => {
-  const computedStyle = getComputedStyle(modal)
-  modalStyle.left = parseInt(computedStyle.left)
-  modalStyle.top = parseInt(computedStyle.top)
-  modalStyle.width = parseInt(computedStyle.width)
-  modalStyle.height = parseInt(computedStyle.height)
+  const styleInStore = storage.modalPosition
+  const style = styleInStore || getComputedStyle(modal)
+  modalStyle.left = parseInt(String(style.left))
+  modalStyle.top = parseInt(String(style.top))
+  modalStyle.width = parseInt(String(style.width))
+  modalStyle.height = parseInt(String(style.height))
+  onMouseUp()
 })
 const onDraggingStart = () => draggingModal = true
 const onResizingStart = () => resizingModal = true
@@ -106,16 +103,7 @@ const onMouseMove = (event: MouseEvent) => {
   }
 }
 
-function getScrollbarWidth() {
-  const scrollDiv = document.createElement('div')
-  scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;'
-  document.body.appendChild(scrollDiv)
-  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-  document.body.removeChild(scrollDiv)
-  return scrollbarWidth
-}
-
-const onMouseUp = async (event: MouseEvent) => {
+const onMouseUp = async (event: MouseEvent | { movementX: 0, movementY: 0, target: any } = {} as any) => {
   const scrollbarWidth = getScrollbarWidth()
   const computedStyle = getComputedStyle(modal)
   const width = parseInt(computedStyle.width)
@@ -123,9 +111,16 @@ const onMouseUp = async (event: MouseEvent) => {
 
   draggingModal = false
   resizingModal = false
-  modalStyle.transition = 'all .1s ease-out'
-  setTimeout(() => {modalStyle.transition = undefined}, 100)
-  await tick()
+
+  // When dragged out of the window, target is document
+  if (event.target === document || event.target?.closest?.('.modal') === modal) {
+    modalStyle.transition = 'all .1s ease-out'
+    setTimeout(() => {
+      modalStyle.transition = undefined
+      storage.modalPosition = modalStyle
+    }, 100)
+    await tick()
+  }
 
   if (modalStyle.width < 400) modalStyle.width = 400
   else if (modalStyle.width > window.innerWidth - scrollbarWidth) modalStyle.width = window.innerWidth - scrollbarWidth
@@ -136,6 +131,7 @@ const onMouseUp = async (event: MouseEvent) => {
   else if (modalStyle.left + event.movementX + width > window.innerWidth - scrollbarWidth) modalStyle.left = window.innerWidth - width - scrollbarWidth
   if (modalStyle.top + event.movementY < 0) modalStyle.top = 0
   else if (modalStyle.top + event.movementY + height > window.innerHeight) modalStyle.top = window.innerHeight - height
+
 }
 
 

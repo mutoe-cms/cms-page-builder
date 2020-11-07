@@ -60,11 +60,14 @@
     ]
   },
   "eslintIgnore": [
-    "*"
+    "**/*.svelte"
   ],
   "jest": {
     "testMatch": [
       "<rootDir>/src/**/*.spec.ts"
+    ],
+    "modulePaths": [
+      "<rootDir>"
     ],
     "transform": {
       "^.+\\.svelte$": [

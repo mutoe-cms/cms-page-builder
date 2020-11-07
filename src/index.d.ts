@@ -2,6 +2,14 @@ declare type JsonType = null | string | number | boolean | JsonType [] | { [key:
 
 declare namespace UI {
 
+  interface ModalStyle {
+    width?: number
+    height?: number
+    top?: number
+    left?: number
+    transition?: string
+  }
+
   interface PageConfig {
     id: string
     sections: Section[]

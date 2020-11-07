@@ -4,5 +4,6 @@
 
 > Browser baseline: Chrome, Firefox. Nice to support: IE11.
 
-- [CSS Variables](https://caniuse.com/css-variables) not IE
-- [Web Component](https://caniuse.com/?search=web%20component) not IE
+- [CSS Variables](https://caniuse.com/css-variables) not IE, Opera Mini
+- [Web Component](https://caniuse.com/?search=web%20component) not IE, Opera Mini
+- [Proxy](https://caniuse.com/proxy) not IE, Opera Mini

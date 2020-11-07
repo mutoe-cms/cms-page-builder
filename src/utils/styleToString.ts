@@ -1,4 +1,4 @@
-export type StyleObject = Partial<Record<keyof CSSStyleDeclaration, Function | CSSRule | string | number | undefined>>
+export type StyleObject = Partial<Record<keyof CSSStyleDeclaration, any>>
 
 export const styleToString = (styleObject: StyleObject = {}): string => {
   const nonUnitProperties = [
