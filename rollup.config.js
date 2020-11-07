@@ -50,7 +50,7 @@ export default {
       preprocess: sveltePreprocess({
         tsconfigFile: './tsconfig.json',
         scss: {
-          prependData: `@import 'src/assets/style/variables';`,
+          prependData: `@import 'src/style/variables';`,
         },
       }),
     }),
