@@ -8,7 +8,7 @@
     bind:this={modal}
     style={styleToString(modalStyle)}
   >
-    <header on:mousedown={onMouseDown}>
+    <header on:mousedown={onDraggingStart}>
       <h2>Section Settings</h2>
     </header>
 
@@ -50,7 +50,12 @@
         <ion-icon name="checkmark-outline"></ion-icon>
       </button>
     </div>
+
+    <button class="resize-handle" on:mousedown={onResizingStart}>
+      <ion-icon name="resize-outline"></ion-icon>
+    </button>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -73,61 +78,115 @@ const onKeyDown = (event: KeyboardEvent) => {
 
 let modal: HTMLDivElement
 let draggingModal = false
-const modalStyle: { left?: number, top?: number, transition?: string } = {}
+let resizingModal = false
+let modalStyle: {
+  left?: number,
+  top?: number,
+  width?: number,
+  height?: number,
+  transition?: string
+} = {}
 
 onMount(() => {
   const computedStyle = getComputedStyle(modal)
   modalStyle.left = parseInt(computedStyle.left)
   modalStyle.top = parseInt(computedStyle.top)
+  modalStyle.width = parseInt(computedStyle.width)
+  modalStyle.height = parseInt(computedStyle.height)
 })
-const onMouseDown = () => draggingModal = true
+const onDraggingStart = () => draggingModal = true
+const onResizingStart = () => resizingModal = true
 const onMouseMove = (event: MouseEvent) => {
-  if (!draggingModal) return
-  modalStyle.left += event.movementX
-  modalStyle.top += event.movementY
+  if (draggingModal) {
+    modalStyle.left += event.movementX
+    modalStyle.top += event.movementY
+  } else if (resizingModal) {
+    modalStyle.width += event.movementX
+    modalStyle.height += event.movementY
+  }
 }
+
+function getScrollbarWidth() {
+  const scrollDiv = document.createElement('div')
+  scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;'
+  document.body.appendChild(scrollDiv)
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+  document.body.removeChild(scrollDiv)
+  return scrollbarWidth
+}
+
 const onMouseUp = async (event: MouseEvent) => {
-  draggingModal = false
+  const scrollbarWidth = getScrollbarWidth()
   const computedStyle = getComputedStyle(modal)
-  const halfWidth = parseInt(computedStyle.width) / 2
-  const halfHeight = parseInt(computedStyle.height) / 2
+  const width = parseInt(computedStyle.width)
+  const height = parseInt(computedStyle.height)
+
+  draggingModal = false
+  resizingModal = false
   modalStyle.transition = 'all .1s ease-out'
   setTimeout(() => {modalStyle.transition = undefined}, 100)
   await tick()
-  if (modalStyle.left + event.movementX - halfWidth < 0) modalStyle.left = halfWidth
-  else if (modalStyle.left + event.movementX + halfWidth > window.innerWidth) modalStyle.left = window.innerWidth - halfWidth
-  if (modalStyle.top + event.movementY - halfHeight < 0) modalStyle.top = halfHeight
-  else if (modalStyle.top + event.movementY + halfHeight > window.innerHeight) modalStyle.top = window.innerHeight - halfHeight
+
+  if (modalStyle.width < 400) modalStyle.width = 400
+  else if (modalStyle.width > window.innerWidth - scrollbarWidth) modalStyle.width = window.innerWidth - scrollbarWidth
+  if (modalStyle.height < 300) modalStyle.height = 300
+  else if (modalStyle.height > window.innerHeight) modalStyle.height = window.innerHeight
+
+  if (modalStyle.left + event.movementX < 0) modalStyle.left = 0
+  else if (modalStyle.left + event.movementX + width > window.innerWidth - scrollbarWidth) modalStyle.left = window.innerWidth - width - scrollbarWidth
+  if (modalStyle.top + event.movementY < 0) modalStyle.top = 0
+  else if (modalStyle.top + event.movementY + height > window.innerHeight) modalStyle.top = window.innerHeight - height
 }
+
+
 </script>
 
 <style lang="scss">
+$border-radius: 4px;
+
 .modal {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: calc(50% - 250px);
+  left: calc(50% - 200px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
   width: 400px;
+  min-width: 400px;
   max-width: 100vw;
+  height: 500px;
+  min-height: 300px;
   max-height: 100vh;
-  background: white;
+  background-color: #fff;
   box-shadow: 0 5px 30px rgba(#000, 0.4);
-  transform: translate(-50%, -50%);
-  border-radius: 4px;
-  overflow: hidden;
+  border-radius: $border-radius;
+
+  &:hover .resize-handle {
+    transform: scale(1, 1);
+  }
 }
 
 header {
+  flex: none;
   padding: 24px;
   color: #fff;
   background-color: #6c2eb9;
   cursor: move;
   user-select: none;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
 
   h2 {
     margin-bottom: 0;
     font-weight: 600;
     font-size: 18px;
   }
+}
+
+.tabs {
+  flex: auto;
+  min-height: 0;
 }
 
 [role=tablist] {
@@ -157,6 +216,7 @@ header {
 
 .button-group {
   display: flex;
+  flex: none;
   height: 48px;
 
   button {
@@ -184,6 +244,30 @@ header {
     &.save {
       background-color: $green;
     }
+  }
+}
+
+.resize-handle {
+  position: absolute;
+  right: -15px;
+  bottom: -15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  font-size: 20px;
+  background: #4c5866;
+  transform: scale(0, 0);
+  cursor: nwse-resize;
+  transition: transform .1s ease;
+  border: none;
+  border-radius: 20px;
+
+  ion-icon {
+    transform: rotateZ(90deg);
+    --ionicon-stroke-width: 64px;
   }
 }
 </style>
