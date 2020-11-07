@@ -13,10 +13,10 @@
       <button aria-label="Settings" class="settings" on:click={onModalOpen}>
         <ion-icon name="settings-sharp"></ion-icon>
       </button>
-      <button aria-label="Duplicate" class="duplicate" on:click={onDuplicate}>
+      <button aria-label="Duplicate section" class="duplicate" on:click={onDuplicate}>
         <ion-icon name="duplicate-sharp"></ion-icon>
       </button>
-      <button aria-label="Delete" class="delete" on:click={onDelete}>
+      <button aria-label="Delete section" class="delete" on:click={onDelete}>
         <ion-icon name="trash-sharp"></ion-icon>
       </button>
     </div>
