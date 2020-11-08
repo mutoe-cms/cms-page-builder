@@ -29,7 +29,7 @@
   <div class="drag-over-placeholder"
     style={styleToString({...dragOverRect, height: dragOverPlaceholderHeight + "px"})}></div>
 
-  {#if modal}
+  {#if $sectionModal}
     <Modal on:close={onModalClose}>
       You selected section {currentModalSection.id}
       (<a href="#section-{currentModalSection.id}">{currentModalSection.id}</a>)
@@ -41,22 +41,21 @@
 import { createEventDispatcher } from 'svelte'
 import { cloneDeep, generateId, styleToString } from 'src/utils'
 import Modal from './Modal.svelte'
-import { currentDragOverSection, currentDragSection, currentSection } from '../stores/currentSection'
+import { sectionModal, currentDragOverSection, currentDragSection, currentSection } from '../stores/currentSection'
 import { pageConfig } from '../stores/pageConfig'
 
 const dragOverPlaceholderHeight = 48
 
-let modal = false
 let currentModalSection: UI.Section = $pageConfig.sections[0]
+
 function onModalOpen() {
-  if (modal) return
-  modal = true
-}
-function onModalClose() {
-  modal = false
-  currentModalSection = null
+  sectionModal.set(true)
 }
 
+function onModalClose() {
+  sectionModal.set(false)
+  currentModalSection = null
+}
 
 let borderRect: Partial<CSSStyleDeclaration> = {
   top: '0',
@@ -69,7 +68,7 @@ let dragOverRect: Partial<CSSStyleDeclaration> = {
 }
 
 currentSection.subscribe(section => {
-  if (modal) return
+  if ($sectionModal) return
   if (!section || $currentDragSection) return borderRect = {}
 
   currentModalSection = section
@@ -113,7 +112,6 @@ function onDelete() {
     return config
   })
 }
-
 
 const dispatch = createEventDispatcher()
 

@@ -8,3 +8,5 @@ export const currentDragOverSection = writable<{ section: UI.Section, isTop: boo
   section: null,
   isTop: true,
 })
+
+export const sectionModal = writable(false)

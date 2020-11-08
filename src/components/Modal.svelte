@@ -12,19 +12,19 @@
       <h2>Section Settings</h2>
     </header>
 
-    <div class="tabs">
-      <div role="tablist" aria-label="Tabs">
-        {#each tabs as tab, i (tab.title)}
-          <button role="tab"
-            id="tab-{i}"
-            aria-controls="panel-{i}"
-            aria-selected={i === currentTab}
-            tabindex="{i === currentTab ? -1 : 0}"
-            on:click={() => currentTab = i}
-          >{tab.title}</button>
-        {/each}
-      </div>
+    <div role="tablist" aria-label="Tabs">
+      {#each tabs as tab, i (tab.title)}
+        <button role="tab"
+          id="tab-{i}"
+          aria-controls="panel-{i}"
+          aria-selected={i === currentTab}
+          tabindex="{i === currentTab ? -1 : 0}"
+          on:click={() => currentTab = i}
+        >{tab.title}</button>
+      {/each}
+    </div>
 
+    <div class="tabs">
       {#each tabs as tab, i (tab.title)}
         <div role="tabpanel" aria-labelledby="tab-{i}"
           id="panel-{i}"
@@ -32,6 +32,8 @@
           hidden={i !== currentTab}>
           {tab.content}
           {JSON.stringify(modalStyle)}
+          <hr>
+          {JSON.stringify($currentSection)}
         </div>
       {/each}
     </div>
@@ -61,6 +63,7 @@
 <script lang="ts">
 import { createEventDispatcher, onMount, tick } from 'svelte'
 import { styleToString, getScrollbarWidth } from 'src/utils'
+import { currentSection } from 'src/stores/currentSection'
 import storage from '../storage'
 
 let currentTab = 0
@@ -183,10 +186,12 @@ header {
 .tabs {
   flex: auto;
   min-height: 0;
+  overflow: hidden scroll;
 }
 
 [role=tablist] {
   display: flex;
+  flex: none;
   background-color: #7e3bd0;
 
   button {

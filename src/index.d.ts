@@ -67,3 +67,7 @@ declare namespace UI {
     link?: string
   }
 }
+
+interface EventTarget {
+  innerHTML: string
+}

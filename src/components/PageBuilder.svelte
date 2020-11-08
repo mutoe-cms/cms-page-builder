@@ -1,5 +1,5 @@
 <template>
-  <div class="page-builder">
+  <div class="page-builder" spellcheck={false}>
     <div class="section-container" on:dragover={throttle(onDragOver, 100)}>
       {#each $pageConfig.sections as section (section.id)}
         <section
@@ -22,7 +22,7 @@
 import { onMount } from 'svelte'
 import { flip } from 'svelte/animate'
 import examplePageConfig from '../examplePageConfig'
-import { currentDragOverSection, currentDragSection, currentSection } from '../stores/currentSection'
+import { currentDragOverSection, currentDragSection, currentSection, sectionModal } from '../stores/currentSection'
 import { pageConfig } from '../stores/pageConfig'
 import SectionOperator from './SectionOperator.svelte'
 import FullWidthSection from './FullWidthSection.svelte'
@@ -35,6 +35,7 @@ onMount(() => {
 })
 
 function onSelectSection(section: UI.Section) {
+  if ($sectionModal) return
   currentSection.set(section)
 }
 
