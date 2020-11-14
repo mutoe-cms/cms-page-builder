@@ -27,7 +27,8 @@
   </div>
 
   <div class="drag-over-placeholder"
-    style={styleToString({...dragOverRect, height: dragOverPlaceholderHeight + "px"})}></div>
+    style={styleToString({...dragOverRect, height: dragOverPlaceholderHeight + "px"})}
+  ></div>
 
   {#if $sectionModal}
     <Modal on:close={onModalClose}>

@@ -30,10 +30,9 @@
           id="panel-{i}"
           tabindex="0"
           hidden={i !== currentTab}>
-          {tab.content}
-          {JSON.stringify(modalStyle)}
-          <hr>
-          {JSON.stringify($currentSection)}
+          <Expansions list={tab.expansions} let:item={item}>
+            {item}
+          </Expansions>
         </div>
       {/each}
     </div>
@@ -62,15 +61,15 @@
 
 <script lang="ts">
 import { createEventDispatcher, onMount, tick } from 'svelte'
+import storage from 'src/storage'
 import { styleToString, getScrollbarWidth } from 'src/utils'
-import { currentSection } from 'src/stores/currentSection'
-import storage from '../storage'
+import Expansions from './Expansions.svelte'
 
 let currentTab = 0
-const tabs = [
-  { title: 'First', content: 'First panel' },
-  { title: 'Second', content: 'Second panel' },
-  { title: 'Third', content: 'Third panel' },
+const tabs: { title: string, expansions: UI.Expansion[] }[] = [
+  { title: 'First', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
+  { title: 'Second', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
+  { title: 'Third', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
 ]
 
 const dispatch = createEventDispatcher()
@@ -134,10 +133,7 @@ const onMouseUp = async (event: MouseEvent | { movementX: 0, movementY: 0, targe
   else if (modalStyle.left + event.movementX + width > window.innerWidth - scrollbarWidth) modalStyle.left = window.innerWidth - width - scrollbarWidth
   if (modalStyle.top + event.movementY < 0) modalStyle.top = 0
   else if (modalStyle.top + event.movementY + height > window.innerHeight) modalStyle.top = window.innerHeight - height
-
 }
-
-
 </script>
 
 <style lang="scss">
@@ -212,7 +208,9 @@ header {
 }
 
 [role='tabpanel'] {
+  height: 100%;
   min-height: 300px;
+  outline: none;
 }
 
 .button-group {
@@ -260,6 +258,7 @@ header {
   color: #fff;
   font-size: 20px;
   background: #4c5866;
+  outline: none;
   transform: scale(0, 0);
   cursor: nwse-resize;
   transition: transform .1s ease;
