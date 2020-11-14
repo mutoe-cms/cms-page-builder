@@ -58,7 +58,12 @@ declare namespace UI {
     body?: string
   }
 
-  type FullWidthModule = FullWidthHeaderModule
+  interface FullWidthImageModule extends ModuleBase {
+    type: 'full-width-image'
+    src?: string
+  }
+
+  type FullWidthModule = FullWidthHeaderModule | FullWidthImageModule
 
   type Module = FullWidthModule
 
@@ -70,4 +75,9 @@ declare namespace UI {
 
 interface EventTarget {
   innerHTML: string
+}
+
+declare module '*.svg' {
+  const src: string
+  export default src
 }

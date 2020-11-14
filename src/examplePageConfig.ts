@@ -2,6 +2,14 @@ const examplePageConfig: UI.PageConfig = {
   id: 'ux7d65ic8f',
   sections: [
     {
+      id: 'image-1',
+      type: 'full-width',
+      module: {
+        id: 'image-module-1',
+        type: 'full-width-image',
+      },
+    },
+    {
       id: 'd74dlnwmuy4',
       type: 'full-width',
       module: {

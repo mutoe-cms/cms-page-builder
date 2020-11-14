@@ -1,10 +1,11 @@
-import svelte from 'rollup-plugin-svelte'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
+import typescript from '@rollup/plugin-typescript'
+import image from '@rollup/plugin-image'
+import svelte from 'rollup-plugin-svelte'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import sveltePreprocess from 'svelte-preprocess'
-import typescript from '@rollup/plugin-typescript'
 import typescriptPathMapping from 'rollup-plugin-typescript-path-mapping'
 
 const production = !process.env.ROLLUP_WATCH
@@ -65,6 +66,7 @@ export default {
       dedupe: [ 'svelte' ],
     }),
     commonjs(),
+    image(),
     typescriptPathMapping({
       baseUrl: '.',
       paths: {},
