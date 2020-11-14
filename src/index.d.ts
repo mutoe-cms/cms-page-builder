@@ -63,7 +63,11 @@ declare namespace UI {
     src?: string
   }
 
-  type FullWidthModule = FullWidthHeaderModule | FullWidthImageModule
+  interface FullWidthCarouselModule extends ModuleBase, Carousel {
+    type: 'full-width-carousel'
+  }
+
+  type FullWidthModule = FullWidthHeaderModule | FullWidthImageModule | FullWidthCarouselModule
 
   type Module = FullWidthModule
 
@@ -78,6 +82,11 @@ interface EventTarget {
 }
 
 declare module '*.svg' {
+  const src: string
+  export default src
+}
+
+declare module '*.jpg' {
   const src: string
   export default src
 }

@@ -1,11 +1,11 @@
 <template>
   {#if link}
-    <a class="button" href={link} on:click={e => contenteditable && e.preventDefault()}>
+    <a class="button" {style} href={link} on:click={e => contenteditable && e.preventDefault()}>
       <span {contenteditable}>{text}</span>
       <ion-icon name="chevron-forward-outline"></ion-icon>
     </a>
   {:else}
-    <button class="button">
+    <button class="button" {style}>
       <span {contenteditable}>{text}</span>
       <ion-icon name="chevron-forward-outline"></ion-icon>
     </button>
@@ -14,7 +14,8 @@
 
 <script lang="ts">
 export let text: string
-export let link: string
+export let link: string = ''
+export let style: string = ''
 export let contenteditable: boolean
 </script>
 

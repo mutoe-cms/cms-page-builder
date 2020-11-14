@@ -3,10 +3,13 @@
     <FullWidthHeader {module} />
   {:else if module.type === 'full-width-image'}
     <FullWidthImage {module} />
+  {:else if module.type === 'full-width-carousel'}
+    <FullWidthCarousel {module} />
   {/if}
 </template>
 
 <script lang="ts">
+import FullWidthCarousel from './fullWidthSectionModules/FullWidthCarousel.svelte'
 import FullWidthImage from './fullWidthSectionModules/FullWidthImage.svelte'
 import FullWidthHeader from './fullWidthSectionModules/FullWidthHeader.svelte'
 

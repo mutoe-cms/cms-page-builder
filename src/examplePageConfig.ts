@@ -2,6 +2,40 @@ const examplePageConfig: UI.PageConfig = {
   id: 'ux7d65ic8f',
   sections: [
     {
+      id: 'carousel-1',
+      type: 'full-width',
+      module: {
+        id: 'full-width-carousel',
+        type: 'full-width-carousel',
+        animation: 'slide',
+        slides: [
+          {
+            title: 'Lorem ipsum',
+            body: 'Lorem ipsum的大部分文本源于西赛罗的《善恶之尽》（De finibus bonorum et malorum）中1.10.32-3小节。',
+            background: '../images/carousel-1.jpg',
+          },
+          {
+            title: 'Lorem ipsum',
+            body: 'Lorem ipsum的大部分文本源于西赛罗的《善恶之尽》（De finibus bonorum et malorum）中1.10.32-3小节。Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit （“无人爱苦，亦无人寻之欲之，乃因其苦”）是第一个众所周知的版本。这是由一名弗吉尼亚Hampden-Sydney 大学的出版社社长，也是一名文献学者的Richard McClintock所发现；他在经典拉丁文学中查找“consectetur”一词相关引用时发现，这个词汇在文学体中使用频率相当低。',
+            background: '../images/carousel-2.jpg',
+          },
+          {
+            title: 'Lorem ipsum',
+            body: '这是由一名弗吉尼亚Hampden-Sydney 大学的出版社社长，也是一名文献学者的Richard McClintock所发现；他在经典拉丁文学中查找“consectetur”一词相关引用时发现，这个词汇在文学体中使用频率相当低。',
+            background: '../images/carousel-3.jpg',
+            button: {
+              text: 'Button',
+            },
+          },
+          {
+            title: 'Lorem ipsum',
+            body: 'Lorem ipsum的大部分文本源于西赛罗的《善恶之尽》（De finibus bonorum et malorum）中1.10.32-3小节。Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit （“无人爱苦，亦无人寻之欲之，乃因其苦”）是第一个众所周知的版本。这是由一名弗吉尼亚Hampden-Sydney 大学的出版社社长，也是一名文献学者的Richard McClintock所发现；他在经典拉丁文学中查找“consectetur”一词相关引用时发现，这个词汇在文学体中使用频率相当低。',
+            background: '../images/carousel-4.jpg',
+          },
+        ],
+      },
+    },
+    {
       id: 'image-1',
       type: 'full-width',
       module: {
