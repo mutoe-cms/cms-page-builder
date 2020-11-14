@@ -14,7 +14,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6, button {
+h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-weight: 500;
 }
@@ -63,3 +63,8 @@ ion-icon {
   vertical-align: -4px;
 }
 
+[contenteditable=true] {
+  outline-width: 1px;
+  outline-color: #fff;
+  cursor: text;
+}

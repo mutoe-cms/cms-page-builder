@@ -56,7 +56,6 @@
       <ion-icon name="resize-outline"></ion-icon>
     </button>
   </div>
-
 </template>
 
 <script lang="ts">
@@ -67,9 +66,9 @@ import Expansions from './Expansions.svelte'
 
 let currentTab = 0
 const tabs: { title: string, expansions: UI.Expansion[] }[] = [
-  { title: 'First', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
-  { title: 'Second', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
-  { title: 'Third', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
+  { title: 'Content', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
+  { title: 'Design', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
+  { title: 'Advanced', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
 ]
 
 const dispatch = createEventDispatcher()

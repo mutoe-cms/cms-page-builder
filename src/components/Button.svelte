@@ -1,12 +1,12 @@
 <template>
   {#if link}
-    <a class="button" href={link}>
-      {text}
+    <a class="button" href={link} on:click={e => contenteditable && e.preventDefault()}>
+      <span {contenteditable}>{text}</span>
       <ion-icon name="chevron-forward-outline"></ion-icon>
     </a>
   {:else}
     <button class="button">
-      {text}
+      <span {contenteditable}>{text}</span>
       <ion-icon name="chevron-forward-outline"></ion-icon>
     </button>
   {/if}
@@ -15,6 +15,7 @@
 <script lang="ts">
 export let text: string
 export let link: string
+export let contenteditable: boolean
 </script>
 
 <style lang="scss">
@@ -31,11 +32,11 @@ export let link: string
   text-decoration: none;
   text-shadow: none;
   background-color: transparent;
+  outline: none;
+  cursor: pointer;
   transition: all .2s;
   border: 2px solid;
   border-radius: 3px;
-  cursor: pointer;
-  outline: none;
 
   ion-icon {
     position: absolute;
@@ -62,5 +63,10 @@ export let link: string
     }
   }
 
+  span[contenteditable=true] {
+    display: inline-block;
+    min-width: 1em;
+    min-height: 1em;
+  }
 }
 </style>

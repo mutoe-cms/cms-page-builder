@@ -2,25 +2,24 @@
   <div class="full-width-header" style={styleToString(module.style)}>
     <div class="full-width-container">
       {#if module.title}
-        <h2 contenteditable="true" on:blur={e => updateContent('title', e.target.innerHTML)}>{@html module.title}</h2>
+        <h2 {contenteditable} on:blur={e => updateContent('title', e.target.innerHTML)}>{@html module.title}</h2>
       {/if}
 
       {#if module.subTitle}
-        <h3 contenteditable="true"
-          on:blur={e => updateContent('subTitle', e.target.innerHTML)}>{@html module.subTitle}</h3>
+        <h3 {contenteditable} on:blur={e => updateContent('subTitle', e.target.innerHTML)}>{@html module.subTitle}</h3>
       {/if}
 
       {#if module.body}
         <div class="body"
-          contenteditable="true"
+          {contenteditable}
           on:blur={e => updateContent('body', e.target.innerHTML)}>{@html module.body}</div>
       {/if}
 
       {#if module.button1}
-        <Button {...module.button1} />
+        <Button {...module.button1} {contenteditable} />
       {/if}
       {#if module.button2}
-        <Button {...module.button2} />
+        <Button {...module.button2} {contenteditable} />
       {/if}
     </div>
   </div>
@@ -32,6 +31,7 @@ import { currentSection } from 'src/stores/currentSection'
 import Button from '../Button.svelte'
 
 export let module: UI.FullWidthHeaderModule
+$: contenteditable = $currentSection?.['module'] === module
 
 const updateContent = (prop: keyof Pick<UI.FullWidthHeaderModule, 'title' | 'subTitle' | 'body'>, html: string) => {
   module[prop] = html.replace(/(?:^(\s|<br>)+|(\s|<br>)+$)/g, '')
