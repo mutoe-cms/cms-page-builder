@@ -1,11 +1,11 @@
 {
-  "name": "cms-web",
-  "version": "0.2.0",
+  "name": "cms-page-builder",
+  "version": "0.3.0",
   "author": "mutoe <mutoe@foxmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mutoe/cms-web.git"
+    "url": "git+https://github.com/mutoe/cms-page-builder.git"
   },
   "scripts": {
     "build": "rollup -c",

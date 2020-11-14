@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import PageBuilder from './components/PageBuilder.svelte'
+import PageBuilder from './page-builder/PageBuilder.svelte'
 </script>
 
 <style lang="scss" global>

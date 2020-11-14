@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/svelte'
-import Modal from './Modal.svelte'
+import Modal from '../Modal.svelte'
 
 describe('# Modal', () => {
   it('should display correctly', () => {

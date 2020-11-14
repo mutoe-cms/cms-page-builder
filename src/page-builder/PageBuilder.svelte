@@ -8,7 +8,7 @@
           on:mouseenter={() => onSelectSection(section)}
         >
           {#if section.type === 'full-width'}
-            <FullWidthSection {section} />
+            <SectionDistributor {section} />
           {/if}
         </section>
       {/each}
@@ -21,12 +21,12 @@
 <script lang="ts">
 import { onMount } from 'svelte'
 import { flip } from 'svelte/animate'
-import examplePageConfig from '../examplePageConfig'
-import { currentDragOverSection, currentDragSection, currentSection, sectionModal } from '../stores/currentSection'
-import { pageConfig } from '../stores/pageConfig'
+import examplePageConfig from 'src/examplePageConfig'
+import { currentDragOverSection, currentDragSection, currentSection, sectionModal } from 'src/stores/pageBuilder'
+import { pageConfig } from 'src/stores/pageConfig'
+import { throttle } from 'src/utils'
 import SectionOperator from './SectionOperator.svelte'
-import FullWidthSection from './FullWidthSection.svelte'
-import { throttle } from '../utils'
+import SectionDistributor from './SectionDistributor.svelte'
 
 pageConfig.set(examplePageConfig)
 

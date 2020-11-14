@@ -6,7 +6,7 @@
     aria-label="Modal"
     aria-modal="true"
     bind:this={modal}
-    style={styleToString(modalStyle)}
+    style={toStyle(modalStyle)}
   >
     <header on:mousedown={onDraggingStart}>
       <h2>Section Settings</h2>
@@ -61,7 +61,7 @@
 <script lang="ts">
 import { createEventDispatcher, onMount, tick } from 'svelte'
 import storage from 'src/storage'
-import { styleToString, getScrollbarWidth } from 'src/utils'
+import { toStyle, getScrollbarWidth } from 'src/utils'
 import Expansions from './Expansions.svelte'
 
 let currentTab = 0

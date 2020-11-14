@@ -1,12 +1,13 @@
 export type StyleObject = Partial<Record<keyof CSSStyleDeclaration, any>>
 
-export const styleToString = (styleObject: StyleObject = {}): string => {
+export const toStyle = (styleObject: StyleObject = {}): string => {
   const nonUnitProperties = [
     'line-height',
     'z-index',
     'order',
     'opacity',
   ]
+
   return Object.entries(styleObject)
     .filter(([ _, v ]) => v || v === 0)
     .map(([ k, v ]) => {

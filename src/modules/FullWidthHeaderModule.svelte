@@ -1,5 +1,5 @@
 <template>
-  <div class="full-width-header" style={styleToString(module.style)}>
+  <div class="full-width-header" style={toStyle(module.style)}>
     <div class="full-width-container">
       {#if module.title}
         <h2 {contenteditable} on:blur={e => updateContent('title', e.target.innerHTML)}>{@html module.title}</h2>
@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts">
-import { styleToString } from 'src/utils'
-import { currentSection } from 'src/stores/currentSection'
-import Button from '../Button.svelte'
+import { toStyle } from 'src/utils'
+import { currentSection } from 'src/stores/pageBuilder'
+import Button from 'src/components/Button.svelte'
 
 export let module: UI.FullWidthHeaderModule
 $: contenteditable = $currentSection?.['module'] === module

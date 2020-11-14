@@ -1,1 +1,6 @@
-export const generateId = (): string => Math.abs(Math.sin(new Date().getTime())).toString(36).slice(2)
+export const generateId = (): string => {
+  const timestamp = new Date().getTime()
+  const random = ~~(Math.random() * 10000)
+
+  return random.toString(36) + timestamp.toString(36)
+}

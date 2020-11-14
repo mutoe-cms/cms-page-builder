@@ -1,5 +1,5 @@
 <template>
-  <div class="section-operator" style={styleToString(borderRect)}>
+  <div class="section-operator" style={toStyle(borderRect)}>
     <div class="border"></div>
 
     <div class="section-menu">
@@ -27,7 +27,7 @@
   </div>
 
   <div class="drag-over-placeholder"
-    style={styleToString({...dragOverRect, height: dragOverPlaceholderHeight + "px"})}
+    style={toStyle({...dragOverRect, height: dragOverPlaceholderHeight + "px"})}
   ></div>
 
   {#if $sectionModal}
@@ -40,10 +40,10 @@
 
 <script lang="ts">
 import { createEventDispatcher } from 'svelte'
-import { cloneDeep, generateId, styleToString } from 'src/utils'
-import Modal from './Modal.svelte'
-import { sectionModal, currentDragOverSection, currentDragSection, currentSection } from '../stores/currentSection'
-import { pageConfig } from '../stores/pageConfig'
+import { cloneDeep, generateId, toStyle } from 'src/utils'
+import Modal from 'src/components/Modal.svelte'
+import { sectionModal, currentDragOverSection, currentDragSection, currentSection } from 'src/stores/pageBuilder'
+import { pageConfig } from 'src/stores/pageConfig'
 
 const dragOverPlaceholderHeight = 48
 

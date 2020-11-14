@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import { pick } from '../../utils'
-import Carousel from '../Carousel.svelte'
-import Button from '../Button.svelte'
+import { pick } from 'src/utils'
+import Carousel from 'src/components/Carousel.svelte'
+import Button from 'src/components/Button.svelte'
 
 export let module: UI.FullWidthCarouselModule
 $: carousel = pick(module, [ 'slides', 'duration', 'arrow', 'indicator' ])

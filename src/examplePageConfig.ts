@@ -1,4 +1,4 @@
-const examplePageConfig: UI.PageConfig = {
+const examplePageConfig: UI.Page = {
   id: 'ux7d65ic8f',
   sections: [
     {

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import defaultImage from '../../images/default_image.svg'
+import defaultImage from 'src/images/default_image.svg'
 
 export let module: UI.FullWidthImageModule
 </script>

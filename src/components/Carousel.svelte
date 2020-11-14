@@ -1,8 +1,8 @@
 <template>
   <div class="carousel" on:mouseenter={() => pause = true} on:mouseleave={() => pause = false}>
-    <div class="slides" style={styleToString({transform: `translateX(-${currentSlide*100}%)`})}>
+    <div class="slides" style={toStyle({transform: `translateX(-${currentSlide*100}%)`})}>
       {#each slides as slide, i (i)}
-        <div class="slide" style={styleToString({backgroundImage: `url(${slide.background})`})}>
+        <div class="slide" style={toStyle({backgroundImage: `url(${slide.background})`})}>
           <slot index={i} slide={slide} />
         </div>
       {/each}
@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { onMount } from 'svelte'
-import { styleToString } from 'src/utils'
+import { toStyle } from 'src/utils'
 
 export let slides: UI.Slide[] = []
 export let arrow: boolean = true
