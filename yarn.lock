@@ -4481,11 +4481,6 @@ rollup-plugin-terser@^7.0.2:
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
 
-rollup-plugin-typescript-path-mapping@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-typescript-path-mapping/-/rollup-plugin-typescript-path-mapping-1.0.2.tgz#e4675930866cb9d45a491421b1d546817f9e3921"
-  integrity sha512-RZLIxSljzF38pWxLkiFo0tOukvPSLclDQ4ydrrOWIogQmJGo3o8NMt9UrhHCfiNqAGgrdgLRfHrA35jPVlCABQ==
-
 rollup-pluginutils@^2.8.2:
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz#72f2af0748b592364dbd3389e600e5a9444a351e"

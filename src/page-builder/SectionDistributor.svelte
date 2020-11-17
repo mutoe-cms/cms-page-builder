@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts">
-import FullWidthCarouselModule from 'src/modules/FullWidthCarouselModule.svelte'
-import FullWidthImageModule from 'src/modules/FullWidthImageModule.svelte'
-import FullWidthHeaderModule from 'src/modules/FullWidthHeaderModule.svelte'
+import FullWidthCarouselModule from '../modules/FullWidthCarouselModule.svelte'
+import FullWidthImageModule from '../modules/FullWidthImageModule.svelte'
+import FullWidthHeaderModule from '../modules/FullWidthHeaderModule.svelte'
 
 export let section: UI.Section
 const module = section['module']

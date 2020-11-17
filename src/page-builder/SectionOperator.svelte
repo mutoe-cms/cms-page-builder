@@ -41,7 +41,7 @@
 <script lang="ts">
 import { createEventDispatcher } from 'svelte'
 import { cloneDeep, generateId, toStyle } from 'src/utils'
-import Modal from 'src/components/Modal.svelte'
+import Modal from '../components/Modal.svelte'
 import { sectionModal, currentDragOverSection, currentDragSection, currentSection } from 'src/stores/pageBuilder'
 import { pageConfig } from 'src/stores/pageConfig'
 

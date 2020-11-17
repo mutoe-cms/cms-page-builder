@@ -28,7 +28,7 @@
 <script lang="ts">
 import { toStyle } from 'src/utils'
 import { currentSection } from 'src/stores/pageBuilder'
-import Button from 'src/components/Button.svelte'
+import Button from '../components/Button.svelte'
 
 export let module: UI.FullWidthHeaderModule
 $: contenteditable = $currentSection?.['module'] === module

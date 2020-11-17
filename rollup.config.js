@@ -6,7 +6,6 @@ import svelte from 'rollup-plugin-svelte'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import sveltePreprocess from 'svelte-preprocess'
-import typescriptPathMapping from 'rollup-plugin-typescript-path-mapping'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -53,7 +52,7 @@ export default {
         scss: {
           prependData: `@import 'src/style/variables';`,
         },
-      }),
+      })
     }),
 
     // If you have external dependencies installed from
@@ -67,12 +66,6 @@ export default {
     }),
     commonjs(),
     image(),
-    typescriptPathMapping({
-      baseUrl: '.',
-      paths: {},
-      rootDir: 'src',
-      outDir: 'public/build',
-    }),
     typescript({
       sourceMap: true,
       inlineSources: !production,

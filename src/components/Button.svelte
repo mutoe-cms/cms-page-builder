@@ -16,7 +16,7 @@
 export let text: string
 export let link: string = ''
 export let style: string = ''
-export let contenteditable: boolean
+export let contenteditable = false
 </script>
 
 <style lang="scss">
