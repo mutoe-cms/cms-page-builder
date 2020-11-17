@@ -9,18 +9,18 @@ import sveltePreprocess from 'svelte-preprocess'
 
 const production = !process.env.ROLLUP_WATCH
 
-function serve() {
+function serve () {
   let server
 
-  function toExit() {
+  function toExit () {
     if (server) server.kill(0)
   }
 
   return {
-    writeBundle() {
+    writeBundle () {
       if (server) return
-      server = require('child_process').spawn('npm', [ 'run', 'start', '--', '--dev' ], {
-        stdio: [ 'ignore', 'inherit', 'inherit' ],
+      server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+        stdio: ['ignore', 'inherit', 'inherit'],
         shell: true,
       })
 
@@ -50,9 +50,9 @@ export default {
       preprocess: sveltePreprocess({
         tsconfigFile: './tsconfig.json',
         scss: {
-          prependData: `@import 'src/style/variables';`,
+          prependData: '@import \'src/style/variables\';',
         },
-      })
+      }),
     }),
 
     // If you have external dependencies installed from
@@ -62,13 +62,14 @@ export default {
     // https://github.com/rollup/plugins/tree/master/packages/commonjs
     resolve({
       browser: true,
-      dedupe: [ 'svelte' ],
+      dedupe: ['svelte'],
     }),
     commonjs(),
     image(),
     typescript({
       sourceMap: true,
       inlineSources: !production,
+      exclude: ['**/*.{spec,test}.{js,ts}'],
     }),
 
     // In dev mode, call `npm run start` once

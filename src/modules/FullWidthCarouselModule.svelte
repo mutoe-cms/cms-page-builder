@@ -17,7 +17,7 @@ import Carousel from '../components/Carousel.svelte'
 import Button from '../components/Button.svelte'
 
 export let module: UI.FullWidthCarouselModule
-$: carousel = pick(module, [ 'slides', 'duration', 'arrow', 'indicator' ])
+$: carousel = pick(module, ['slides', 'duration', 'arrow', 'indicator'])
 </script>
 
 <style lang="scss">

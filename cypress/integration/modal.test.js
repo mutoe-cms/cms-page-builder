@@ -5,7 +5,7 @@ describe('# Modal', () => {
 
     cy.get('.modal')
       .should('be.visible')
-      .should(([ el ]) => {
+      .should(([el]) => {
         const style = getComputedStyle(el)
         const deltaY = Math.abs(parseInt(style.top) - parseInt(style.bottom))
         expect(deltaY).to.be.at.most(1)
@@ -25,7 +25,7 @@ describe('# Modal', () => {
       .trigger('mousemove', { movementX: 100, movementY: 100 })
       .trigger('mouseup', { eventConstructor: 'MouseEvent' })
 
-    cy.get('.modal').should(([ el ]) => {
+    cy.get('.modal').should(([el]) => {
       const style = getComputedStyle(el)
       expect(parseInt(style.bottom)).to.equal(0)
     })
@@ -37,7 +37,7 @@ describe('# Modal', () => {
       .trigger('mousemove', { movementX: 300, movementY: -300, force: true })
       .trigger('mouseup', { eventConstructor: 'MouseEvent', force: true })
 
-    cy.get('.modal').should(([ el ]) => {
+    cy.get('.modal').should(([el]) => {
       const style = getComputedStyle(el)
 
       expect(parseInt(style.right)).to.equal(0)
@@ -53,7 +53,7 @@ describe('# Modal', () => {
   it('should remember last position', () => {
     cy.openModal(2)
 
-    cy.get('.modal').should(([ el ]) => {
+    cy.get('.modal').should(([el]) => {
       const style = getComputedStyle(el)
 
       expect(parseInt(style.right)).to.equal(0)

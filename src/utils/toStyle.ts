@@ -9,13 +9,12 @@ export const toStyle = (styleObject: StyleObject = {}): string => {
   ]
 
   return Object.entries(styleObject)
-    .filter(([ _, v ]) => v || v === 0)
-    .map(([ k, v ]) => {
+    .filter(([_, v]) => v === 0 || v)
+    .map(([k, v]) => {
       k = k.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)
       if (typeof v === 'number' && v !== 0 && !nonUnitProperties.includes(k)) v = `${v}px`
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       return `${k}:${v}`
     })
     .join(';')
 }
-
-

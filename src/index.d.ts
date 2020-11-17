@@ -1,5 +1,3 @@
-declare type JsonType = null | string | number | boolean | JsonType [] | { [key: string]: JsonType }
-
 interface EventTarget {
   innerHTML: string
 }

@@ -7,7 +7,7 @@ describe('# toStyle', () => {
       border: '1px solid #fff',
     }
 
-    expect(toStyle(styleObject)).toEqual(`padding-top:20px;border:1px solid #fff`)
+    expect(toStyle(styleObject)).toEqual('padding-top:20px;border:1px solid #fff')
   })
 
   it('should append "px" with number property value', () => {

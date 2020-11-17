@@ -9,6 +9,6 @@
 // ***********************************************
 
 Cypress.Commands.add('openModal', (nth = 1) => {
-  cy.get(`.section-container > section:nth-child(${nth})`).trigger(`mouseenter`)
+  cy.get(`.section-container > section:nth-child(${nth})`).trigger('mouseenter')
   cy.findByRole('button', { name: 'Settings' }).click()
 })

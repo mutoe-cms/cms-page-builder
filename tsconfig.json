@@ -8,10 +8,12 @@
       "jest",
       "@testing-library/jest-dom"
     ],
-    "typeRoots": ["node_modules/@types", "src/types"]
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "noEmit": true
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "cypress/**/*"
   ],
   "exclude": [
     "node_modules/*",

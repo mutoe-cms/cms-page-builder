@@ -48,7 +48,7 @@ describe('# debounce', () => {
   it('should bind this correctly', () => {
     const obj = {
       target: 'foo',
-      fn() { callback(this.target) },
+      fn () { callback(this.target) },
       debounced: () => {},
     }
 
@@ -62,6 +62,7 @@ describe('# debounce', () => {
 
   it('should passed the correct parameters', () => {
     const fn = function (foo: string, bar: string) {
+      // eslint-disable-next-line standard/no-callback-literal
       callback(...arguments)
       return 'baz'
     }

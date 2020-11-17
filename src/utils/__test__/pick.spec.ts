@@ -15,7 +15,7 @@ describe('# pick', () => {
       a: 1,
       b: 2,
     }
-    pick(foo, [ 'a' ])
+    pick(foo, ['a'])
 
     expect(foo).toEqual({ a: 1, b: 2 })
   })

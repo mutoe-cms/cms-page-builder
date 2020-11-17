@@ -15,4 +15,3 @@ const storage = new Proxy(store, {
 })
 
 export default storage
-

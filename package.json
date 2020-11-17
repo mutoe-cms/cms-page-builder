@@ -11,29 +11,19 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public",
-    "validate": "svelte-check",
+    "lint": "eslint '{cypress,src}/**/*.{ts,js}' && svelte-check",
     "test": "jest src",
-    "test:watch": "yarn test --watch",
     "cy": "cypress"
   },
   "dependencies": {
     "sirv-cli": "^1.0.8"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-image": "^2.0.5",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@rollup/plugin-typescript": "^6.1.0",
-    "@testing-library/cypress": "^7.0.1",
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/svelte": "^3.0.0",
     "@tsconfig/svelte": "^1.0.10",
-    "@types/jest": "^26.0.15",
-    "cypress": "^5.6.0",
-    "husky": "^4.3.0",
-    "jest": "^26.6.3",
     "postcss": "^8.1.7",
     "rollup": "^2.33.1",
     "rollup-plugin-livereload": "^2.0.0",
@@ -44,15 +34,40 @@
     "svelte-check": "^1.1.11",
     "svelte-jester": "^1.1.5",
     "svelte-preprocess": "^4.5.2",
-    "ts-jest": "^26.4.4",
     "tslib": "^2.0.3",
     "typescript": "^4.0.5"
+  },
+  "optionalDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@testing-library/cypress": "^7.0.1",
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/svelte": "^3.0.0",
+    "@types/jest": "^26.0.15",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "cypress": "^5.6.0",
+    "eslint": "^7.13.0",
+    "eslint-config-standard-with-typescript": "^19.0.1",
+    "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.1.0",
+    "husky": "^4.3.0",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.1",
+    "ts-jest": "^26.4.4"
   },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn validate"
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn lint"
     }
+  },
+  "lint-staged": {
+    "{src,cypress}/**/*.{js,ts}": "eslint --fix"
   },
   "commitlint": {
     "extends": [
@@ -62,6 +77,35 @@
   "eslintIgnore": [
     "**/*.svelte"
   ],
+  "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "extends": [
+      "standard-with-typescript"
+    ],
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/strict-boolean-expressions": "off",
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
+    },
+    "overrides": [
+      {
+        "files": [
+          "cypress/**/*.js"
+        ],
+        "plugins": [
+          "cypress"
+        ],
+        "env": {
+          "cypress/globals": true
+        }
+      }
+    ]
+  },
   "jest": {
     "testMatch": [
       "<rootDir>/src/**/*.spec.ts"

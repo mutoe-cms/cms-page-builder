@@ -15,7 +15,7 @@ describe('# omit', () => {
       a: 1,
       b: 2,
     }
-    omit(foo, [ 'a' ])
+    omit(foo, ['a'])
 
     expect(foo).toEqual({ a: 1, b: 2 })
   })

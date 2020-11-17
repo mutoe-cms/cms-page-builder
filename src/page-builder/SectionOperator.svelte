@@ -123,7 +123,7 @@ async function onDratStart(event: DragEvent) {
   const elementLeft = sectionElement.getBoundingClientRect().left + document.documentElement.scrollLeft
   const offsetTop = event.pageY - elementTop
   const offsetLeft = event.pageX - elementLeft
-  event.dataTransfer.setDragImage(sectionElement, offsetLeft, offsetTop)
+  event.dataTransfer?.setDragImage(sectionElement, offsetLeft, offsetTop)
   setTimeout(() => {
     dispatch('dragstart', $currentSection)
   })

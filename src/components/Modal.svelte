@@ -81,7 +81,12 @@ const onKeyDown = (event: KeyboardEvent) => {
 let modal: HTMLDivElement
 let draggingModal = false
 let resizingModal = false
-const modalStyle: UI.ModalStyle = {}
+const modalStyle: UI.ModalStyle = {
+  width: 0,
+  height: 0,
+  left: 0,
+  top: 0,
+}
 
 onMount(() => {
   const styleInStore = storage.modalPosition
