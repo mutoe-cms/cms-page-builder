@@ -4,5 +4,8 @@
       "cypress",
       "@testing-library/cypress"
     ]
-  }
+  },
+  "include": [
+    "./**/*.{js,ts}"
+  ]
 }
