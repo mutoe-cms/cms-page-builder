@@ -94,6 +94,7 @@
     },
     "overrides": [
       {
+        "parser": "",
         "files": [
           "cypress/**/*.js"
         ],
