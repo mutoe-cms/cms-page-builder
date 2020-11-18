@@ -2,7 +2,8 @@ export default function omit<T extends Record<K, any>, K extends string> (object
   if (!(paths instanceof Array)) paths = [paths]
   const omitted = { ...object }
   for (const key of paths) {
-    omitted[key] = undefined as any
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+    delete omitted[key]
   }
   return omitted
 }

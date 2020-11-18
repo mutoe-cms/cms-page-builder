@@ -34,12 +34,12 @@ onMount(() => {
   document.addEventListener('dragover', e => void e.preventDefault())
 })
 
-function onSelectSection(section: UI.Section) {
+function onSelectSection (section: UI.Section) {
   if ($sectionModal) return
   currentSection.set(section)
 }
 
-function onDragStart(event: CustomEvent<UI.Section>) {
+function onDragStart (event: CustomEvent<UI.Section>) {
   const index = $pageConfig.sections.findIndex((it => it === event.detail))
   currentDragSection.set($pageConfig.sections[index])
   currentSection.set(null)
@@ -49,7 +49,7 @@ function onDragStart(event: CustomEvent<UI.Section>) {
   })
 }
 
-function onDragEnd(event: CustomEvent) {
+function onDragEnd (event: CustomEvent) {
   event.preventDefault()
 
   let insertIndex = $pageConfig.sections.findIndex(it => it.id === $currentDragOverSection.section.id)
@@ -61,9 +61,10 @@ function onDragEnd(event: CustomEvent) {
   currentDragSection.set(null)
 }
 
-function onDragOver(event: DragEvent) {
+function onDragOver (event: DragEvent) {
   const sectionElement = (event.target as HTMLElement)?.closest('section')
   if (!sectionElement) return
+  event.stopPropagation()
   const topThreshold = sectionElement.offsetTop + sectionElement.offsetHeight / 2
   const isTop = event.clientY < topThreshold
   const sectionId = sectionElement?.id.replace(/^section-/, '')
