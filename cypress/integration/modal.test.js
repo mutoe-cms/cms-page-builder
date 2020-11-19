@@ -15,8 +15,9 @@ describe('# Modal', () => {
   })
 
   it('should display the second panel when click the second tab', () => {
-    cy.contains('Second').click()
-    cy.get('.modal').contains('Second panel')
+    cy.contains('Design').click()
+    cy.get('#panel-1')
+      .should('not.have.attr', 'hidden')
   })
 
   it('should can be movable', () => {
@@ -62,7 +63,7 @@ describe('# Modal', () => {
   })
 
   it('should can be closed by ESC keydown', () => {
-    cy.get('body').trigger('keydown', { key: 'Escape' })
+    cy.get('body').trigger('keydown', { key: 'Escape', force: true })
     cy.get('.modal').should('not.be.visible')
   })
 })

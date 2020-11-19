@@ -7,14 +7,14 @@ describe('# Modal', () => {
     cy.get('.section-container > section:first').trigger('mouseenter')
     cy.findByRole('button', { name: 'Duplicate section' }).click()
 
-    cy.get('.section-container > section').should('have.length', 4)
+    cy.get('.section-container > section').should('have.length', 6)
   })
 
   it('should remove the section when click the delete button', () => {
-    cy.contains('标题').should('exist')
-    cy.get('.section-container > section:nth-child(3)').trigger('mouseenter')
+    cy.get('.section-container > section:first').trigger('mouseenter')
     cy.findByRole('button', { name: 'Delete section' }).click()
-    cy.contains('标题').should('not.exist')
+
+    cy.get('.section-container > section').should('have.length', 5)
   })
 
   // TODO: Don't know how to test draggable element
