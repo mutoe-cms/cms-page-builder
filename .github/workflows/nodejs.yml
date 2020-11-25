@@ -23,18 +23,21 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: install dependencies
+      - name: Install dependencies
         run: yarn install --skip-integrity-check --non-interactive --no-progress
 
       - run: yarn lint
       - run: yarn test
 
       - run: yarn build
-      - run: yarn start
+      - name: serve static page
+        run: yarn start &
+
       - uses: cypress-io/github-action@v2
 
-      - run: echo > public/.nojekyll
-      - name: deploy
+      - name: Setup github pages
+        run: echo > public/.nojekyll
+      - name: Deploy to github pages
         uses: s0/git-publish-subdir-action@master
         env:
           REPO: self
