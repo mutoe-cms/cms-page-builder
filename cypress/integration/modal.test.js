@@ -41,7 +41,7 @@ describe('# Modal', () => {
     cy.get('.modal').should(([el]) => {
       const style = getComputedStyle(el)
 
-      expect(parseInt(style.right)).to.equal(0)
+      expect(parseInt(style.right)).to.lte(0)
       expect(parseInt(style.bottom)).to.equal(200)
     })
   })
