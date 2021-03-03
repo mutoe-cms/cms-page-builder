@@ -2,10 +2,10 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript'
 import image from '@rollup/plugin-image'
+import css from 'rollup-plugin-css-only'
 import svelte from 'rollup-plugin-svelte'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
-import sveltePreprocess from 'svelte-preprocess'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -40,19 +40,10 @@ export default {
   },
   plugins: [
     svelte({
-      // enable run-time checks when not in production
-      dev: !production,
-      // we'll extract any component CSS out into
-      // a separate file - better for performance
-      css: css => {
-        css.write('bundle.css')
-      },
-      preprocess: sveltePreprocess({
-        tsconfigFile: './tsconfig.json',
-        scss: {
-          prependData: '@import \'src/style/variables\';',
-        },
-      }),
+      ...require('./svelte.config'),
+    }),
+    css({
+      output: 'bundle.css',
     }),
 
     // If you have external dependencies installed from
