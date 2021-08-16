@@ -1,10 +1,9 @@
-const sveltePreprocess = require('svelte-preprocess')
+import sveltePreprocess from 'svelte-preprocess'
 
-module.exports = {
+export default {
   preprocess: sveltePreprocess({
-    tsconfigFile: './tsconfig.json',
     scss: {
-      prependData: '@import \'src/style/variables\';',
+      prependData: "@import 'src/style/variables';",
     },
   }),
 }

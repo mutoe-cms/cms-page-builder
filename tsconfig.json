@@ -1,23 +1,21 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "resolveJsonModule": true,
     "baseUrl": ".",
-    "rootDir": "src",
     "types": [
+      "vite/client",
       "svelte",
       "jest",
       "@testing-library/jest-dom"
     ],
-    "typeRoots": ["node_modules/@types", "src/types"],
-    "noEmit": true,
-    "allowJs": false
+    "checkJs": true,
+    "allowJs": true
   },
   "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules/*",
-    "__sapper__/*",
-    "public/*"
+    "src/**/*.ts",
+    "src/**/*.svelte"
   ]
 }
