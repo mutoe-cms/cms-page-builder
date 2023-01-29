@@ -1,4 +1,4 @@
-declare module UI {
+declare namespace UI {
   interface Slide {
     title?: string
     body?: string

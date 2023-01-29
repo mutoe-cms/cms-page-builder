@@ -13,13 +13,13 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint 'src/**/*.{ts,js}' && svelte-check",
+    "lint": "eslint 'src/**/*.{ts,js}'",
+    "type-check": "svelte-check",
     "test": "jest src",
     "cy": "cypress",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "version": "pnpm changelog && git add CHANGELOG.md"
   },
-  "dependencies": {},
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.17",
     "@tsconfig/svelte": "^2.0.1",
@@ -35,19 +35,15 @@
   "optionalDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@mutoe/eslint-config-preset-ts": "^2.2.0",
     "@testing-library/cypress": "^8.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/svelte": "^3.0.3",
     "@types/jest": "^26.0.24",
-    "@typescript-eslint/eslint-plugin": "^4.29.1",
-    "@typescript-eslint/parser": "^4.29.1",
     "cypress": "^8.2.0",
-    "eslint": "^7.32.0",
-    "eslint-config-standard-with-typescript": "^20.0.0",
-    "eslint-plugin-cypress": "^2.11.3",
-    "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
+    "eslint": "^8.33.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-svelte3": "^4.0.0",
     "husky": "^7.0.1",
     "jest": "^26.6.3",
     "lint-staged": "^11.1.2",
@@ -62,25 +58,30 @@
       "@commitlint/config-conventional"
     ]
   },
-  "eslintIgnore": [
-    "**/*.svelte"
-  ],
   "eslintConfig": {
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
+    "root": true,
+    "plugins": [
+      "svelte3"
+    ],
     "extends": [
-      "standard-with-typescript"
+      "@mutoe/eslint-config-preset-ts"
     ],
     "rules": {
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/strict-boolean-expressions": "off",
-      "comma-dangle": [
-        "error",
-        "always-multiline"
-      ]
+      "@typescript-eslint/strict-boolean-expressions": "off"
     },
     "overrides": [
+      {
+        "files": [
+          "*.svelte"
+        ],
+        "processor": "svelte3/svelte3"
+      },
+      {
+        "files": ["*.{test,spec,cy}.ts?(x)"],
+        "rules": {
+          "@typescript-eslint/no-empty-function": "off"
+        }
+      },
       {
         "parser": "",
         "files": [
@@ -122,5 +123,8 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,svelte}"
     ]
+  },
+  "dependencies": {
+    "eslint-plugin-cypress": "^2.12.1"
   }
 }

@@ -61,9 +61,8 @@ describe('# debounce', () => {
   })
 
   it('should passed the correct parameters', () => {
-    const fn = function (foo: string, bar: string) {
-      // eslint-disable-next-line node/no-callback-literal
-      callback(...arguments)
+    const fn = function (...args: string[]) {
+      callback(...args)
       return 'baz'
     }
     const debounced = debounce(fn, 0)

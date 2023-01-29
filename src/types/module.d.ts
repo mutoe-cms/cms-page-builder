@@ -1,4 +1,4 @@
-declare module UI {
+declare namespace UI {
   interface ModuleBase {
     id: string
     style?: Partial<CSSStyleDeclaration>

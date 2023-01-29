@@ -1,3 +1,4 @@
+/* eslint-disable prefer-rest-params */
 type ThrottleFn<T, A extends any[]> = (this: T, ...args: A) => unknown
 
 export const throttle = <T = any, A extends any[] = any[]>(fn: ThrottleFn<T, A>, wait: number): (this: T, ...args: A) => void => {
@@ -6,7 +7,7 @@ export const throttle = <T = any, A extends any[] = any[]>(fn: ThrottleFn<T, A>,
 
   function throttled () {
     if (firstInvoke) {
-      fn.apply(this, arguments)
+      Reflect.apply(fn, this, arguments)
       firstInvoke = false
       return
     }
@@ -16,7 +17,7 @@ export const throttle = <T = any, A extends any[] = any[]>(fn: ThrottleFn<T, A>,
       clearTimeout(timer)
       timer = null
 
-      fn.apply(this, arguments)
+      Reflect.apply(fn, this, arguments)
     }, wait)
   }
 
