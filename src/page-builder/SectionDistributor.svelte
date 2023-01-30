@@ -20,5 +20,3 @@ const fullwidthModuleMap: Record<UI.FullWidthModule['type'], unknown> = {
   'full-width-carousel': FullWidthCarouselModule,
 }
 </script>
-
-<style lang="scss"></style>

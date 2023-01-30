@@ -11,16 +11,18 @@
     {#if indicator}
       <div class="indicator">
         {#each slides as _, i}
-          <span class:active={currentSlide === i} on:click={() => currentSlide = i}></span>
+          <span class:active={currentSlide === i}
+                on:click={() => currentSlide = i}
+                on:keypress={() => currentSlide = i}></span>
         {/each}
       </div>
     {/if}
 
     {#if arrow}
-      <div class="left-control" on:click={prevSlide}>
+      <div class="left-control" on:click={prevSlide} on:keypress={prevSlide}>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </div>
-      <div class="right-control" on:click={nextSlide}>
+      <div class="right-control" on:click={nextSlide} on:keypress={nextSlide}>
         <ion-icon name="chevron-down-outline"></ion-icon>
       </div>
     {/if}

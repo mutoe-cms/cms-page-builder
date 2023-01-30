@@ -12,10 +12,10 @@ describe('# debounce', () => {
     debounced()
     expect(callback).not.toBeCalled()
 
-    jest.runTimersToTime(200)
+    jest.advanceTimersByTime(200)
     expect(callback).not.toBeCalled()
 
-    jest.runTimersToTime(100)
+    jest.advanceTimersByTime(100)
     expect(callback).toBeCalledTimes(1)
   })
 
@@ -23,13 +23,13 @@ describe('# debounce', () => {
     const debounced = debounce(callback, 250)
 
     debounced()
-    jest.runTimersToTime(100)
+    jest.advanceTimersByTime(100)
 
     debounced()
-    jest.runTimersToTime(200)
+    jest.advanceTimersByTime(200)
     expect(callback).not.toBeCalled()
 
-    jest.runTimersToTime(300)
+    jest.advanceTimersByTime(300)
     expect(callback).toBeCalledTimes(1)
   })
 
@@ -37,11 +37,11 @@ describe('# debounce', () => {
     const debounced = debounce(callback, 250)
 
     debounced()
-    jest.runTimersToTime(250)
+    jest.advanceTimersByTime(250)
     expect(callback).toBeCalledTimes(1)
 
     debounced()
-    jest.runTimersToTime(250)
+    jest.advanceTimersByTime(250)
     expect(callback).toBeCalledTimes(2)
   })
 

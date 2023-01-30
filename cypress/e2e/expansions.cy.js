@@ -1,5 +1,5 @@
 describe('# Expansions', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/')
     cy.openModal()
   })
@@ -11,6 +11,7 @@ describe('# Expansions', () => {
   })
 
   it('should collapse other details when click another details', () => {
+    cy.get('.modal').contains('Text').click()
     cy.get('.modal').contains('Images').click()
 
     cy.get('.expansions .details:nth-child(2)').should('have.class', 'open')
@@ -19,7 +20,9 @@ describe('# Expansions', () => {
 
   it('should collapse the details when click a detail again', () => {
     cy.get('.modal').contains('Images').click()
+    cy.get('.expansions .details:nth-child(2)').should('have.class', 'open')
 
+    cy.get('.modal').contains('Images').click()
     cy.get('.expansions .details:nth-child(2)').should('not.have.class', 'open')
   })
 })

@@ -2,7 +2,7 @@
   <div class="expansions">
     {#each list as item, i (item.summary)}
       <div class="details" class:open={i === currentExpand}>
-        <h3 class="summary" on:click={() => onToggle(i)}>
+        <h3 class="summary" on:click={() => onToggle(i)} on:keypress={() => onToggle(i)}>
           {item.summary}
           <ion-icon name="chevron-down-outline"></ion-icon>
         </h3>

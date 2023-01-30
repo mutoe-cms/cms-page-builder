@@ -1,4 +1,5 @@
-import { toStyle, StyleObject } from '../toStyle'
+import { toStyle } from '../toStyle'
+import type { StyleObject } from '../toStyle'
 
 describe('# toStyle', () => {
   it('should convert style object to kebab-case from camelCase', () => {
