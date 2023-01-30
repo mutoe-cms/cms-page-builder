@@ -1,25 +1,26 @@
 <template>
-  {#if link}
-    <a class="button" {style} href={link} on:click={e => contenteditable && e.preventDefault()}>
-      <span {contenteditable}>{text}</span>
-      <ion-icon name="chevron-forward-outline"></ion-icon>
-    </a>
-  {:else}
-    <button class="button" {style}>
-      <span {contenteditable}>{text}</span>
-      <ion-icon name="chevron-forward-outline"></ion-icon>
-    </button>
-  {/if}
+  <a v-if="link" class="button" :style="style" :href="link" @click="e => contenteditable && e.preventDefault()">
+    <span :contenteditable="contenteditable">{{ text }}</span>
+    <ion-icon name="chevron-forward-outline" />
+  </a>
+  <button v-else class="button" :style="style">
+    <span :contenteditable="contenteditable">{{ text }}</span>
+    <ion-icon name="chevron-forward-outline" />
+  </button>
 </template>
 
-<script lang="ts">
-export let text: string
-export let link: string = ''
-export let style: string = ''
-export let contenteditable = false
+<script setup lang="ts">
+import type { StyleValue } from 'vue'
+
+defineProps<{
+  text: string
+  link?: string
+  style?: StyleValue
+  contenteditable?: boolean
+}>()
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .button {
   position: relative;
   display: inline-block;

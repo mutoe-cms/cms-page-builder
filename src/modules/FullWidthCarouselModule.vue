@@ -1,26 +1,24 @@
 <template>
-  <Carousel {...carousel} let:slide={slide}>
-    <div class="mask"></div>
+  <Carousel v-slot="{slide}" v-bind="module">
+    <div class="mask" />
     <div class="content">
-      <h2>{slide.title}</h2>
-      <p>{slide.body}</p>
-      {#if slide.button}
-        <Button style="margin-top: 12px" {...slide.button} />
-      {/if}
+      <h2>{{ slide.title }}</h2>
+      <p>{{ slide.body }}</p>
+      <Button v-if="slide.button" v-bind="slide.button" />
     </div>
   </Carousel>
 </template>
 
-<script lang="ts">
-import { pick } from 'src/utils'
-import Carousel from '../components/Carousel.svelte'
-import Button from '../components/Button.svelte'
+<script setup lang="ts">
+import Carousel from '../components/Carousel.vue'
+import Button from '../components/Button.vue'
 
-export let module: UI.FullWidthCarouselModule
-$: carousel = pick(module, ['slides', 'duration', 'arrow', 'indicator'])
+defineProps<{
+  module: UI.FullWidthCarouselModule
+}>()
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .mask {
   position: absolute;
   top: 0;
@@ -51,6 +49,10 @@ $: carousel = pick(module, ['slides', 'duration', 'arrow', 'indicator'])
 
   p {
     text-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+  }
+
+  .button {
+    margin-top: 12px;
   }
 }
 </style>

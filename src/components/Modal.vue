@@ -1,89 +1,101 @@
-<svelte:window on:keydown={onKeyDown} on:mousemove={onMouseMove} on:mouseup={onMouseUp} />
-
 <template>
-  <div class="modal"
+  <div
+    ref="modal"
+    class="modal"
     role="dialog"
     aria-label="Modal"
-    aria-modal="true"
-    bind:this={modal}
-    style={toStyle(modalStyle)}
+    :aria-modal="true"
+    :style="toStyle(modalStyle)"
   >
-    <header on:mousedown={onDraggingStart}>
+    <header @mousedown="onDraggingStart">
       <h2>Section Settings</h2>
     </header>
 
     <div role="tablist" aria-label="Tabs">
-      {#each tabs as tab, i (tab.title)}
-        <button role="tab"
-          id="tab-{i}"
-          aria-controls="panel-{i}"
-          aria-selected={i === currentTab}
-          tabindex="{i === currentTab ? -1 : 0}"
-          on:click={() => currentTab = i}
-        >{tab.title}</button>
-      {/each}
+      <button
+        v-for="(tab, i) in tabs"
+        :id="`tab-${i}`"
+        :key="tab.title"
+        role="tab"
+        :aria-controls="`panel-${i}`"
+        :aria-selected="i === currentTab"
+        :tabindex="i === currentTab ? -1 : 0"
+        @click="() => currentTab = i"
+      >
+        {{ tab.title }}
+      </button>
     </div>
 
     <div class="tabs">
-      {#each tabs as tab, i (tab.title)}
-        <div role="tabpanel" aria-labelledby="tab-{i}"
-          id="panel-{i}"
-          tabindex="0"
-          hidden={i !== currentTab}>
-          <Expansions list={tab.expansions} let:item={item}>
-            {item}
-          </Expansions>
-        </div>
-      {/each}
+      <div
+        v-for="(tab, i) in tabs"
+        :id="`panel-${i}`"
+        :key="tab.title"
+        role="tabpanel"
+        :aria-labelledby="`tab-${i}`"
+        :tabindex="0"
+        :hidden="i !== currentTab"
+      >
+        <Expansions v-slot="item" :list="tab.expansions">
+          {{ item }}
+        </Expansions>
+      </div>
     </div>
 
     <div class="button-group">
-      <button aria-label="Close modal" class="close" title="Close" on:click={close}>
-        <ion-icon name="close-outline"></ion-icon>
+      <button aria-label="Close modal" class="close" title="Close" @click="emit('close')">
+        <ion-icon name="close-outline" />
       </button>
       <button aria-label="Undo" class="undo" title="Undo">
-        <ion-icon name="arrow-undo"></ion-icon>
+        <ion-icon name="arrow-undo" />
       </button>
       <button aria-label="Redo" class="redo" title="Redo">
-        <ion-icon name="arrow-redo"></ion-icon>
+        <ion-icon name="arrow-redo" />
       </button>
       <button aria-label="Save" class="save" title="Save">
-        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-icon name="checkmark-outline" />
       </button>
     </div>
 
-    <button class="resize-handle" on:mousedown={onResizingStart}>
-      <ion-icon name="resize-outline"></ion-icon>
+    <button class="resize-handle" @mousedown="onResizingStart">
+      <ion-icon name="resize-outline" />
     </button>
   </div>
 </template>
 
-<script lang="ts">
-import { createEventDispatcher, onMount, tick } from 'svelte'
+<script setup lang="ts">
 import storage from 'src/storage'
-import { toStyle, getScrollbarWidth } from 'src/utils'
-import Expansions from './Expansions.svelte'
+import { getScrollbarWidth, toStyle } from 'src/utils'
+import { nextTick, onBeforeUnmount, onMounted, reactive } from 'vue'
+import Expansions from './Expansions.vue'
 
-let currentTab = 0
+const currentTab = 0
 const tabs: { title: string, expansions: UI.Expansion[] }[] = [
-  { title: 'Content', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
-  { title: 'Design', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
-  { title: 'Advanced', expansions: [ { summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' } ] },
+  { title: 'Content', expansions: [{ summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' }] },
+  { title: 'Design', expansions: [{ summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' }] },
+  { title: 'Advanced', expansions: [{ summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' }] },
 ]
 
-const dispatch = createEventDispatcher()
-const close = () => dispatch('close')
+const emit = defineEmits<{
+  (e:'close'): void
+}>()
 
-const onKeyDown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape') return close()
-}
+onMounted(() => {
+  window.addEventListener('keydown', onKeyDown)
+  window.addEventListener('mousemove', onMouseMove)
+  window.addEventListener('mouseup', onMouseUp)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeyDown)
+  window.removeEventListener('mousemove', onMouseMove)
+  window.removeEventListener('mouseup', onMouseUp)
+})
 
-let modal: HTMLDivElement
-let draggingModal = false
-let resizingModal = false
-const modalStyle: UI.ModalStyle = {}
+const modal = $ref<HTMLDivElement | null>(null)
+const modalStyle: UI.ModalStyle = reactive({ left: 0, top: 0, width: 0, height: 0 })
 
-onMount(() => {
+onMounted(() => {
+  if (!modal) return
   const styleInStore = storage.modalPosition
   const style = styleInStore || getComputedStyle(modal)
   modalStyle.left = parseInt(String(style.left))
@@ -92,8 +104,17 @@ onMount(() => {
   modalStyle.height = parseInt(String(style.height))
   onMouseUp()
 })
-const onDraggingStart = () => draggingModal = true
-const onResizingStart = () => resizingModal = true
+
+let draggingModal = $ref(false)
+const onDraggingStart = () => (draggingModal = true)
+
+let resizingModal = $ref(false)
+const onResizingStart = () => (resizingModal = true)
+
+const onKeyDown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') return emit('close')
+}
+
 const onMouseMove = (event: MouseEvent) => {
   if (draggingModal) {
     modalStyle.left += event.movementX
@@ -104,8 +125,9 @@ const onMouseMove = (event: MouseEvent) => {
   }
 }
 
-const onMouseUp = async (event: MouseEvent | { movementX: 0, movementY: 0, target: any } = {} as any) => {
+const onMouseUp = async (event: MouseEvent | { movementX: number, movementY: number, target: any } = {} as any) => {
   const scrollbarWidth = getScrollbarWidth()
+  if (!modal) return
   const computedStyle = getComputedStyle(modal)
   const width = parseInt(computedStyle.width)
   const height = parseInt(computedStyle.height)
@@ -120,7 +142,7 @@ const onMouseUp = async (event: MouseEvent | { movementX: 0, movementY: 0, targe
       modalStyle.transition = undefined
       storage.modalPosition = modalStyle
     }, 100)
-    await tick()
+    await nextTick()
   }
 
   if (modalStyle.width < 400) modalStyle.width = 400
@@ -135,7 +157,7 @@ const onMouseUp = async (event: MouseEvent | { movementX: 0, movementY: 0, targe
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 $border-radius: 4px;
 
 .modal {

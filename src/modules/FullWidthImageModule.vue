@@ -1,16 +1,18 @@
 <template>
   <div class="image">
-    <img src={module?.src || defaultImage} alt="">
+    <img :src="module.src || defaultImage" :alt="module.alt">
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import defaultImage from '../images/default_image.svg'
 
-export let module: UI.FullWidthImageModule
+defineProps<{
+  module: UI.FullWidthImageModule
+}>()
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .image {
   img {
     display: block;

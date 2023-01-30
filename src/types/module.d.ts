@@ -1,7 +1,9 @@
 declare namespace UI {
+  import type { StyleValue } from 'vue'
+
   interface ModuleBase {
     id: string
-    style?: Partial<CSSStyleDeclaration>
+    style?: StyleValue
   }
 
   interface FullWidthHeaderModule extends ModuleBase {
@@ -16,6 +18,7 @@ declare namespace UI {
   interface FullWidthImageModule extends ModuleBase {
     type: 'full-width-image'
     src?: string
+    alt?: string
   }
 
   interface FullWidthCarouselModule extends ModuleBase, Carousel {

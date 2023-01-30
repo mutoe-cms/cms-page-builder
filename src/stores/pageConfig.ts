@@ -1,6 +1,6 @@
-import { writable } from 'svelte/store'
+import { ref } from 'vue'
 
-export const pageConfig = writable<UI.Page>({
+export const pageConfig = ref<UI.Page>({
   id: 'empty',
   sections: [],
 })

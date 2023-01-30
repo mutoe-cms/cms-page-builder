@@ -1,45 +1,49 @@
 <template>
-  <div class="carousel" on:mouseenter={() => pause = true} on:mouseleave={() => pause = false}>
-    <div class="slides" style={toStyle({transform: `translateX(-${currentSlide*100}%)`})}>
-      {#each slides as slide, i (i)}
-        <div class="slide" style={toStyle({backgroundImage: `url(${slide.background})`})}>
-          <slot index={i} slide={slide} />
-        </div>
-      {/each}
+  <div class="carousel" @mouseenter="() => pause = true" @mouseleave="() => (pause = false)">
+    <div class="slides" :style="{transform: `translateX(-${currentSlide*100}%)`}">
+      <div v-for="(slide, i) in slides" :key="i" class="slide" :style="{backgroundImage: `url(${slide.background})`}">
+        <slot :index="i" :slide="slide" />
+      </div>
     </div>
 
-    {#if indicator}
-      <div class="indicator">
-        {#each slides as _, i}
-          <span class:active={currentSlide === i}
-                on:click={() => currentSlide = i}
-                on:keypress={() => currentSlide = i}></span>
-        {/each}
-      </div>
-    {/if}
+    <div v-if="indicator" class="indicator">
+      <span
+        v-for="(_, i) in slides"
+        :key="i"
+        :class="{active: currentSlide === i}"
+        @click="() => currentSlide = i"
+        @keypress="() => currentSlide = i"
+      />
+    </div>
 
-    {#if arrow}
-      <div class="left-control" on:click={prevSlide} on:keypress={prevSlide}>
-        <ion-icon name="chevron-down-outline"></ion-icon>
+    <template v-if="arrow">
+      <div class="left-control" @click="prevSlide" @keypress="prevSlide">
+        <ion-icon name="chevron-down-outline" />
       </div>
-      <div class="right-control" on:click={nextSlide} on:keypress={nextSlide}>
-        <ion-icon name="chevron-down-outline"></ion-icon>
+      <div class="right-control" @click="nextSlide" @keypress="nextSlide">
+        <ion-icon name="chevron-down-outline" />
       </div>
-    {/if}
+    </template>
   </div>
 </template>
 
-<script lang="ts">
-import { onMount } from 'svelte'
-import { toStyle } from 'src/utils'
+<script setup lang="ts">
+import { onMounted } from 'vue'
 
-export let slides: UI.Slide[] = []
-export let arrow: boolean = true
-export let indicator: boolean = true
-export let duration: number = 5000
+const {
+  slides = [],
+  arrow = true,
+  indicator = true,
+  duration = 5000,
+} = defineProps<{
+  slides: UI.Slide[]
+  arrow?: boolean
+  indicator?: boolean
+  duration?: number
+}>()
 
-let currentSlide = 0
-let pause = false
+let currentSlide = $ref(0)
+const pause = $ref(false)
 
 const nextSlide = () => {
   currentSlide += 1
@@ -58,12 +62,12 @@ const autoplay = () => {
   }, duration)
 }
 
-onMount(() => {
+onMounted(() => {
   duration > 0 && autoplay()
 })
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .carousel {
   position: relative;
   clear: both;

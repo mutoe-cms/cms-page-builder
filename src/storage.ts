@@ -1,14 +1,19 @@
-const store = {
-  modalPosition: null as UI.ModalStyle | null,
+interface StorageData {
+  modalPosition?: UI.ModalStyle | null
 }
 
-const storage = new Proxy(store, {
+const storageData: StorageData = {}
+
+const storage = new Proxy(storageData, {
   get (store, prop) {
-    if (!(prop in store)) throw new Error(`${String(prop)} is not in store`)
-    return JSON.parse(localStorage.getItem(String(prop)) ?? 'null')
+    const text = localStorage.getItem(String(prop)) ?? 'null'
+    try {
+      return JSON.parse(text)
+    } catch {
+      return null
+    }
   },
   set (store, prop, value) {
-    if (!(prop in store)) throw new Error(`${String(prop)} is not in store}`)
     localStorage.setItem(String(prop), JSON.stringify(value))
     return true
   },
