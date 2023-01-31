@@ -1,5 +1,5 @@
 <template>
-  <div class="carousel" @mouseenter="() => pause = true" @mouseleave="() => (pause = false)">
+  <div class="carousel" @mouseenter="pause = true" @mouseleave="pause = false">
     <div class="slides" :style="{transform: `translateX(-${currentSlide*100}%)`}">
       <div v-for="(slide, i) in slides" :key="i" class="slide" :style="{backgroundImage: `url(${slide.background})`}">
         <slot :index="i" :slide="slide" />
@@ -11,8 +11,8 @@
         v-for="(_, i) in slides"
         :key="i"
         :class="{active: currentSlide === i}"
-        @click="() => currentSlide = i"
-        @keypress="() => currentSlide = i"
+        @click="currentSlide = i"
+        @keypress="currentSlide = i"
       />
     </div>
 
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 
 const {
   slides = [],
@@ -43,7 +43,7 @@ const {
 }>()
 
 let currentSlide = $ref(0)
-const pause = $ref(false)
+let pause = $ref(false)
 
 const nextSlide = () => {
   currentSlide += 1
@@ -62,8 +62,16 @@ const autoplay = () => {
   }, duration)
 }
 
+const onVisibilityChange = () => {
+  pause = document.visibilityState === 'hidden'
+}
+
 onMounted(() => {
   duration > 0 && autoplay()
+  document.addEventListener('visibilitychange', onVisibilityChange)
+})
+onBeforeUnmount(() => {
+  document.removeEventListener('visibilitychange', onVisibilityChange)
 })
 </script>
 
