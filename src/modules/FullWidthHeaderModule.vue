@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { currentSection } from 'src/stores/pageBuilder'
-import { ref } from 'vue'
+import { computed } from 'vue'
 import Button from '../components/Button.vue'
 
 const { module } = defineProps<{
@@ -42,7 +42,7 @@ const emit = defineEmits<{
   update:(module: UI.FullWidthHeaderModule) => void
 }>()
 
-const contenteditable = ref((currentSection.value && 'module' in currentSection.value && currentSection.value.module === module) ?? undefined)
+const contenteditable = computed(() => (currentSection.value && 'module' in currentSection.value && currentSection.value.module === module) ?? undefined)
 
 const updateContent = (prop: keyof Pick<UI.FullWidthHeaderModule, 'title' | 'subTitle' | 'body'>, html: string) => {
   const newModule = { ...module, prop: html.replace(/^(\s|<br>)+|(\s|<br>)+$/g, '') }
