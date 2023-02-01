@@ -1,9 +1,4 @@
 {
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -21,7 +16,7 @@
     ],
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["vite/client", "vue/macros-global"]
+    "types": ["vite/client",  "vue/macros-global", "vitest", "vitest/globals"]
   },
   "include": [
     "src/**/*.ts",
@@ -29,7 +24,12 @@
     "src/**/*.tsx",
     "src/**/*.vue"
   ],
-  "exclude": [
-    "**/__test__/**"
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.cypress.json"
+    }
   ]
 }

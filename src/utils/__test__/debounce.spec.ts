@@ -1,10 +1,13 @@
+import { vitest } from 'vitest'
 import { debounce } from '../debounce'
 
 describe('# debounce', () => {
-  afterEach(jest.clearAllMocks)
+  afterEach(() => {
+    vitest.clearAllMocks()
+  })
 
-  const callback = jest.fn()
-  jest.useFakeTimers()
+  const callback = vitest.fn()
+  vitest.useFakeTimers()
 
   it('should trigger callback after 250ms of the first call', () => {
     const debounced = debounce(callback, 250)
@@ -12,10 +15,10 @@ describe('# debounce', () => {
     debounced()
     expect(callback).not.toBeCalled()
 
-    jest.advanceTimersByTime(200)
+    vitest.advanceTimersByTime(200)
     expect(callback).not.toBeCalled()
 
-    jest.advanceTimersByTime(100)
+    vitest.advanceTimersByTime(100)
     expect(callback).toBeCalledTimes(1)
   })
 
@@ -23,13 +26,13 @@ describe('# debounce', () => {
     const debounced = debounce(callback, 250)
 
     debounced()
-    jest.advanceTimersByTime(100)
+    vitest.advanceTimersByTime(100)
 
     debounced()
-    jest.advanceTimersByTime(200)
+    vitest.advanceTimersByTime(200)
     expect(callback).not.toBeCalled()
 
-    jest.advanceTimersByTime(300)
+    vitest.advanceTimersByTime(300)
     expect(callback).toBeCalledTimes(1)
   })
 
@@ -37,11 +40,11 @@ describe('# debounce', () => {
     const debounced = debounce(callback, 250)
 
     debounced()
-    jest.advanceTimersByTime(250)
+    vitest.advanceTimersByTime(250)
     expect(callback).toBeCalledTimes(1)
 
     debounced()
-    jest.advanceTimersByTime(250)
+    vitest.advanceTimersByTime(250)
     expect(callback).toBeCalledTimes(2)
   })
 
@@ -55,7 +58,7 @@ describe('# debounce', () => {
     obj.debounced = debounce(obj.fn, 0)
 
     obj.debounced()
-    jest.runAllTimers()
+    vitest.runAllTimers()
 
     expect(callback).toBeCalledWith('foo')
   })
@@ -68,7 +71,7 @@ describe('# debounce', () => {
     const debounced = debounce(fn, 0)
 
     debounced('foo', 'bar')
-    jest.runAllTimers()
+    vitest.runAllTimers()
 
     expect(callback).toBeCalledWith('foo', 'bar')
   })
