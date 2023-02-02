@@ -20,7 +20,7 @@
         :aria-controls="`panel-${i}`"
         :aria-selected="i === currentTab"
         :tabindex="i === currentTab ? -1 : 0"
-        @click="() => currentTab = i"
+        @click="currentTab = i"
       >
         {{ tab.title }}
       </button>
@@ -69,7 +69,7 @@ import { getScrollbarWidth, toStyle } from 'src/utils'
 import { nextTick, onBeforeUnmount, onMounted, reactive } from 'vue'
 import Expansions from './Expansions.vue'
 
-const currentTab = 0
+const currentTab = $ref(0)
 const tabs: { title: string, expansions: UI.Expansion[] }[] = [
   { title: 'Content', expansions: [{ summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' }] },
   { title: 'Design', expansions: [{ summary: 'Text' }, { summary: 'Images' }, { summary: 'Link' }] },
@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
 })
 
 const modal = $ref<HTMLDivElement | null>(null)
-const modalStyle: UI.ModalStyle = reactive({ left: 0, top: 0, width: 0, height: 0 })
+const modalStyle: UI.ModalStyle = reactive({})
 
 onMounted(() => {
   if (!modal) return
@@ -117,10 +117,14 @@ const onKeyDown = (event: KeyboardEvent) => {
 
 const onMouseMove = (event: MouseEvent) => {
   if (draggingModal) {
+    modalStyle.left ??= 0
     modalStyle.left += event.movementX
+    modalStyle.top ??= 0
     modalStyle.top += event.movementY
   } else if (resizingModal) {
+    modalStyle.width ??= 0
     modalStyle.width += event.movementX
+    modalStyle.height ??= 0
     modalStyle.height += event.movementY
   }
 }
@@ -145,11 +149,15 @@ const onMouseUp = async (event: MouseEvent | { movementX: number, movementY: num
     await nextTick()
   }
 
-  if (modalStyle.width < 400) modalStyle.width = 400
+  modalStyle.width ??= 0
+  modalStyle.height ??= 0
+  if ((modalStyle.width) < 400) modalStyle.width = 400
   else if (modalStyle.width > window.innerWidth - scrollbarWidth) modalStyle.width = window.innerWidth - scrollbarWidth
   if (modalStyle.height < 300) modalStyle.height = 300
   else if (modalStyle.height > window.innerHeight) modalStyle.height = window.innerHeight
 
+  modalStyle.left ??= 0
+  modalStyle.top ??= 0
   if (modalStyle.left + event.movementX < 0) modalStyle.left = 0
   else if (modalStyle.left + event.movementX + width > window.innerWidth - scrollbarWidth) modalStyle.left = window.innerWidth - width - scrollbarWidth
   if (modalStyle.top + event.movementY < 0) modalStyle.top = 0
