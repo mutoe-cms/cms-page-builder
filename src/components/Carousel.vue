@@ -1,7 +1,19 @@
 <template>
-  <div class="carousel" @mouseenter="pause = true" @mouseleave="pause = false">
+  <div
+    class="carousel"
+    @mouseenter="pause = true"
+    @mouseleave="pause = false"
+    @focusin="pause = true"
+    @focusout="pause = false"
+  >
     <div class="slides" :style="{transform: `translateX(-${currentSlide*100}%)`}">
-      <div v-for="(slide, i) in slides" :key="i" class="slide" :style="{backgroundImage: `url(${slide.background})`}">
+      <div
+        v-for="(slide, i) in slides"
+        :key="i"
+        class="slide"
+        :style="{backgroundImage: `url(${slide.background})`}"
+        @focusin="currentSlide = i"
+      >
         <slot :index="i" :slide="slide" />
       </div>
     </div>
@@ -31,7 +43,7 @@
 import { onBeforeUnmount, onMounted } from 'vue'
 
 const {
-  slides = [],
+  slides,
   arrow = true,
   indicator = true,
   duration = 5000,

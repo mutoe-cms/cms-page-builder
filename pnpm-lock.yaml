@@ -1,13 +1,14 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@mutoe/eslint-config-preset-vue': ^2.2.0
+  '@mutoe/eslint-config-preset-vue': ~2.3.0
   '@testing-library/cypress': ^9.0.0
   '@types/node': ^18
   '@vitejs/plugin-vue': ^4.0.0
   '@vitest/coverage-c8': ^0.28.3
   cypress: ^12.4.1
   eslint: ^8.33.0
+  eslint-plugin-cypress: ^2.12.1
   husky: ^8.0.3
   lint-staged: ^13.1.0
   sass: ^1.57.1
@@ -21,13 +22,14 @@ dependencies:
   vue: 3.2.45
 
 devDependencies:
-  '@mutoe/eslint-config-preset-vue': 2.2.0_srtf3p4wrczp347mqzmbdekiyq
+  '@mutoe/eslint-config-preset-vue': 2.3.0_srtf3p4wrczp347mqzmbdekiyq
   '@testing-library/cypress': 9.0.0_cypress@12.4.1
   '@types/node': 18.11.18
   '@vitejs/plugin-vue': 4.0.0_vite@4.0.4+vue@3.2.45
   '@vitest/coverage-c8': 0.28.3_sass@1.57.1
   cypress: 12.4.1
   eslint: 8.33.0
+  eslint-plugin-cypress: 2.12.1_eslint@8.33.0
   husky: 8.0.3
   lint-staged: 13.1.0
   sass: 1.57.1
@@ -384,12 +386,12 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@mutoe/eslint-config-preset-basic/2.1.2_kf2q37rsxgsj6p2nz45hjttose:
-    resolution: {integrity: sha512-H446pFOzfFyxVJDAZmiH3a2EbJFGvEfohgXBFOiCUVqGvHma0ZE+HZ73AHY6NP696Ut03YkXAAW1SDGNiulBzQ==}
+  /@mutoe/eslint-config-preset-basic/2.3.0_kf2q37rsxgsj6p2nz45hjttose:
+    resolution: {integrity: sha512-JfGWyUUamFlSAulfXrN/vUvfeDr4kdMiUsNgV/l9m35vMFTsE/VD5PtgXXMqqtdeZgklPfUCvIs9/R05gXK3HQ==}
     peerDependencies:
       eslint: ^8.17.0
     dependencies:
-      '@mutoe/eslint-config-preset-standard': 1.2.1_kf2q37rsxgsj6p2nz45hjttose
+      '@mutoe/eslint-config-preset-standard': 2.3.0_kf2q37rsxgsj6p2nz45hjttose
       eslint: 8.33.0
       eslint-plugin-html: 7.1.0
       eslint-plugin-jsonc: 2.6.0_eslint@8.33.0
@@ -404,10 +406,10 @@ packages:
       - supports-color
     dev: true
 
-  /@mutoe/eslint-config-preset-standard/1.2.1_kf2q37rsxgsj6p2nz45hjttose:
-    resolution: {integrity: sha512-8pqA6egFBkE778HlfmEatU9c5EkM68j3HHnvySzvcWZG/uAXEcNZCkUKS/K8HK/hlgSI6j2kVLHGJqALdbtRVQ==}
+  /@mutoe/eslint-config-preset-standard/2.3.0_kf2q37rsxgsj6p2nz45hjttose:
+    resolution: {integrity: sha512-/vuKVg3ydtrEvHDoW3lhZFR7o+9A8YlgQxt/aI9aCi5IcGbj03kHyZYnaz72dyY5N79aGcGKhQfwZomCrcx+4g==}
     peerDependencies:
-      eslint: ^8.17.0
+      eslint: ^8
     dependencies:
       eslint: 8.33.0
       eslint-plugin-import: 2.27.5_kf2q37rsxgsj6p2nz45hjttose
@@ -420,13 +422,13 @@ packages:
       - supports-color
     dev: true
 
-  /@mutoe/eslint-config-preset-ts/2.2.0_zkdaqh7it7uc4cvz2haft7rc6u:
-    resolution: {integrity: sha512-2MpVjX3xHJccxA5ckn3/uEd24lUrSuu+sNEQgK8SF70V0S4i+sqY2B7FolxTVMaQfQR0iKe3hNOcPPBzCRm4zA==}
+  /@mutoe/eslint-config-preset-ts/2.3.0_zkdaqh7it7uc4cvz2haft7rc6u:
+    resolution: {integrity: sha512-oAmMq8+YuAxgySjrIDeXMyvEfdGH4bHC/9UHUiOfTtwSzCkdadx/HlkiJMpMOiMm1+hSu1bER6vICoC5ErP9PA==}
     peerDependencies:
-      eslint: ^8.17.0
+      eslint: ^8
       typescript: '>=3.9'
     dependencies:
-      '@mutoe/eslint-config-preset-basic': 2.1.2_kf2q37rsxgsj6p2nz45hjttose
+      '@mutoe/eslint-config-preset-basic': 2.3.0_kf2q37rsxgsj6p2nz45hjttose
       '@typescript-eslint/eslint-plugin': 5.49.0_rsaczafy73x3xqauzesvzbsgzy
       '@typescript-eslint/parser': 5.49.0_zkdaqh7it7uc4cvz2haft7rc6u
       eslint: 8.33.0
@@ -437,15 +439,16 @@ packages:
       - supports-color
     dev: true
 
-  /@mutoe/eslint-config-preset-vue/2.2.0_srtf3p4wrczp347mqzmbdekiyq:
-    resolution: {integrity: sha512-D5gEeHUxySy2hBIqPguSoswHeKtrMjgyF4YN8hUC7yP8z3QgvCDWdO7H0AWmrz/Le0w8B5uXPKhykghxZvIiMw==}
+  /@mutoe/eslint-config-preset-vue/2.3.0_srtf3p4wrczp347mqzmbdekiyq:
+    resolution: {integrity: sha512-EXXZHNm02IohYjTt79VW6IvIPvycBg1MFdXstAaGyCxnpPGEZtdFXr35fkPeveFKZxTuZbS0TxX0FmoMZa0XPw==}
     peerDependencies:
-      eslint: ^8.17.0
+      eslint: ^8
       vue: ^3
     dependencies:
-      '@mutoe/eslint-config-preset-ts': 2.2.0_zkdaqh7it7uc4cvz2haft7rc6u
+      '@mutoe/eslint-config-preset-ts': 2.3.0_zkdaqh7it7uc4cvz2haft7rc6u
       eslint: 8.33.0
       eslint-plugin-vue: 9.9.0_eslint@8.33.0
+      eslint-plugin-vuejs-accessibility: 2.1.0_eslint@8.33.0
       vue: 3.2.45
       vue-eslint-parser: 9.1.0_eslint@8.33.0
     transitivePeerDependencies:
@@ -1587,6 +1590,10 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
+  /emoji-regex/10.2.1:
+    resolution: {integrity: sha512-97g6QgOk8zlDRdgq1WxwgTMgEWGVAQvB5Fdpgc1MkNy56la5SKP9GsMXKDOdqwn90/41a8yPwIGk1Y6WVbeMQA==}
+    dev: true
+
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -1780,6 +1787,15 @@ packages:
       - supports-color
     dev: true
 
+  /eslint-plugin-cypress/2.12.1_eslint@8.33.0:
+    resolution: {integrity: sha512-c2W/uPADl5kospNDihgiLc7n87t5XhUbFDoTl6CfVkmG+kDAb5Ux10V9PoLPu9N+r7znpc+iQlcmAqT1A/89HA==}
+    peerDependencies:
+      eslint: '>= 3.2.1'
+    dependencies:
+      eslint: 8.33.0
+      globals: 11.12.0
+    dev: true
+
   /eslint-plugin-es/4.1.0_eslint@8.33.0:
     resolution: {integrity: sha512-GILhQTnjYE2WorX5Jyi5i4dz5ALWxBIdQECVQavL6s7cI76IZTDWleTHkxz/QT3kvcs2QlGHvKLYsSlPOlPXnQ==}
     engines: {node: '>=8.10.0'}
@@ -1905,6 +1921,19 @@ packages:
       semver: 7.3.8
       vue-eslint-parser: 9.1.0_eslint@8.33.0
       xml-name-validator: 4.0.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /eslint-plugin-vuejs-accessibility/2.1.0_eslint@8.33.0:
+    resolution: {integrity: sha512-TM0JWrpOUOmka3v83QkH5uYkwUUNWg2RPa6imnBU1El2kRv0Ws1e9N84VPW2HLLTW+Fo+XsdKmiKLXwtIhCqsg==}
+    peerDependencies:
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      aria-query: 5.1.3
+      emoji-regex: 10.2.1
+      eslint: 8.33.0
+      vue-eslint-parser: 9.1.0_eslint@8.33.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2355,6 +2384,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       ini: 2.0.0
+    dev: true
+
+  /globals/11.12.0:
+    resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
+    engines: {node: '>=4'}
     dev: true
 
   /globals/13.20.0:

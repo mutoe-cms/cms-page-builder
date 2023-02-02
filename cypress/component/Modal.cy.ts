@@ -5,7 +5,7 @@ describe('<Modal>', () => {
     cy.mount(Modal)
   })
 
-  it('should emit close event when trigger close method', async () => {
+  it('should emit close event when trigger close method', () => {
     const onClose = cy.spy()
     cy.mount(Modal, {
       props: { onClose },
@@ -16,7 +16,7 @@ describe('<Modal>', () => {
     cy.wrap(onClose).should('be.calledOnce')
   })
 
-  it('should emit close event when press ESC key', async () => {
+  it('should emit close event when press ESC key', () => {
     const onClose = cy.spy().as('onClose')
     cy.mount(Modal, {
       props: { onClose },

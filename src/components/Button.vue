@@ -1,9 +1,16 @@
 <template>
-  <a v-if="link" class="button" :style="style" :href="link" @click="e => contenteditable && e.preventDefault()">
+  <a
+    v-if="link"
+    class="button"
+    :style="style"
+    :href="link"
+    :tabindex="contenteditable ? -1 : 0"
+    @click="e => contenteditable && e.preventDefault()"
+  >
     <span :contenteditable="contenteditable">{{ text }}</span>
     <ion-icon name="chevron-forward-outline" />
   </a>
-  <button v-else class="button" :style="style">
+  <button v-else class="button" :style="style" :tabindex="contenteditable ? -1 : 0">
     <span :contenteditable="contenteditable">{{ text }}</span>
     <ion-icon name="chevron-forward-outline" />
   </button>

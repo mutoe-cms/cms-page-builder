@@ -10,7 +10,10 @@
         v-for="section in pageConfig.sections"
         :id="`section-${section.id}`"
         :key="section.id"
+        role="menuitem"
+        tabindex="0"
         @mouseenter="onSelectSection(section)"
+        @focusin="onSelectSection(section)"
       >
         <SectionDistributor v-if="section.type === 'full-width'" :section="section" />
       </section>
