@@ -1,7 +1,7 @@
 {
   "name": "cms-page-builder",
   "private": true,
-  "version": "0.4.1",
+  "version": "0.4.2",
   "author": "mutoe <mutoe@foxmail.com>",
   "license": "MIT",
   "type": "module",

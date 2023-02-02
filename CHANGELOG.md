@@ -1,3 +1,13 @@
+## [0.4.2](https://github.com/mutoe/cms-page-builder/compare/v0.4.1...v0.4.2) (2023-02-02)
+
+
+### Bug Fixes
+
+* cypress config ([e16b91f](https://github.com/mutoe/cms-page-builder/commit/e16b91f8c7c475010bb5c7e8808ee7f7f89ff8b2))
+* modal initial position ([4a40b2c](https://github.com/mutoe/cms-page-builder/commit/4a40b2ce297970491b5cab95aea02276af1d74e4))
+
+
+
 ## 0.4.1 (2023-02-02)
 
 
