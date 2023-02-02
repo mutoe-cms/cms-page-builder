@@ -22,7 +22,7 @@ describe('<Modal>', () => {
       props: { onClose },
     })
 
-    cy.type('{esc}')
+    cy.get('body').type('{esc}')
 
     cy.get('@onClose').should('be.calledOnce')
   })
