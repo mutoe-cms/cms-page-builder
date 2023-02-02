@@ -1,4 +1,4 @@
-import Modal from '../Modal.vue'
+import Modal from 'src/components/Modal.vue'
 
 describe('<Modal>', () => {
   it('should display correctly', () => {
@@ -6,7 +6,7 @@ describe('<Modal>', () => {
   })
 
   it('should emit close event when trigger close method', async () => {
-    const onClose = cy.spy().as('onClose')
+    const onClose = cy.spy()
     cy.mount(Modal, {
       props: { onClose },
     })
@@ -14,7 +14,6 @@ describe('<Modal>', () => {
     cy.findByRole('button', { name: 'Close modal' }).click()
 
     cy.wrap(onClose).should('be.calledOnce')
-    // cy.get('@onClose').should('be.calledOnce')
   })
 
   it('should emit close event when press ESC key', async () => {

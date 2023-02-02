@@ -1,4 +1,4 @@
-import Button from '../Button.vue'
+import Button from 'src/components/Button.vue'
 
 describe('<Button />', () => {
   describe('click link button', () => {
