@@ -1,21 +1,39 @@
 <template>
-  <Carousel v-slot="{slide}" v-bind="module">
+  <Carousel v-slot="{slide, index}" :slides="module.slides">
     <div class="mask" />
     <div class="content">
-      <h2>{{ slide.title }}</h2>
-      <p>{{ slide.body }}</p>
-      <Button v-if="slide.button" v-bind="slide.button" />
+      <h2 :contenteditable="contenteditable" @blur="e => updateContent(index, 'title', e.target?.innerHTML ?? '')">
+        {{ slide.title }}
+      </h2>
+      <p :contenteditable="contenteditable" @blur="e => updateContent(index,'body', e.target?.innerHTML ?? '')">
+        {{ slide.body }}
+      </p>
+      <Button v-if="slide.button" :contenteditable="contenteditable" v-bind="slide.button" />
     </div>
   </Carousel>
 </template>
 
 <script setup lang="ts">
-import Carousel from '../components/Carousel.vue'
+import { currentSection } from 'src/stores/pageBuilder'
+import { computed } from 'vue'
 import Button from '../components/Button.vue'
+import Carousel from '../components/Carousel.vue'
 
-defineProps<{
+const { module } = defineProps<{
   module: UI.FullWidthCarouselModule
 }>()
+
+const emit = defineEmits<{
+  (e: 'update', module: UI.FullWidthCarouselModule): void
+}>()
+
+const contenteditable = computed(() => (currentSection.value && 'module' in currentSection.value && currentSection.value.module.id === module.id) ?? undefined)
+
+const updateContent = (index: number, prop: keyof UI.Slide, html: string) => {
+  const newSlide: UI.Slide = { ...module.slides[index], [prop]: html.replace(/^(\s|<br>)+|(\s|<br>)+$/g, '') }
+  const newSlides: UI.Slide[] = module.slides.map((slide, i) => i === index ? newSlide : slide)
+  emit('update', { ...module, slides: newSlides })
+}
 </script>
 
 <style scoped lang="scss">

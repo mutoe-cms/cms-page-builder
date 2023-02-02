@@ -7,7 +7,7 @@
       @dragover="onDragOver"
     >
       <section
-        v-for="section in pageConfig.sections"
+        v-for="(section, index) in pageConfig.sections.filter(it => it)"
         :id="`section-${section.id}`"
         :key="section.id"
         role="menuitem"
@@ -15,7 +15,11 @@
         @mouseenter="onSelectSection(section)"
         @focusin="onSelectSection(section)"
       >
-        <SectionDistributor v-if="section.type === 'full-width'" :section="section" />
+        <SectionDistributor
+          v-if="section.type === 'full-width'"
+          :section="section"
+          @update="section => onSectionUpdate(index, section)"
+        />
       </section>
     </TransitionGroup>
 
@@ -41,6 +45,10 @@ onMounted(() => {
 function onSelectSection (section: UI.Section) {
   if (sectionModal.value) return
   currentSection.value = section
+}
+
+function onSectionUpdate (index: number, section: UI.Section) {
+  pageConfig.value.sections[index] = section
 }
 
 function onDragStart (section: UI.Section) {

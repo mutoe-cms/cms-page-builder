@@ -39,15 +39,14 @@ const { module } = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  update:(module: UI.FullWidthHeaderModule) => void
+  (e:'update', module: UI.FullWidthHeaderModule): void
 }>()
 
-const contenteditable = computed(() => (currentSection.value && 'module' in currentSection.value && currentSection.value.module === module) ?? undefined)
+const contenteditable = computed(() => (currentSection.value && 'module' in currentSection.value && currentSection.value.module.id === module.id) ?? undefined)
 
 const updateContent = (prop: keyof Pick<UI.FullWidthHeaderModule, 'title' | 'subTitle' | 'body'>, html: string) => {
-  const newModule = { ...module, prop: html.replace(/^(\s|<br>)+|(\s|<br>)+$/g, '') }
-  emit.update(newModule)
-  currentSection.value = { ...currentSection.value! }
+  const newModule: UI.FullWidthHeaderModule = { ...module, [prop]: html.replace(/^(\s|<br>)+|(\s|<br>)+$/g, '') }
+  emit('update', newModule)
 }
 </script>
 
