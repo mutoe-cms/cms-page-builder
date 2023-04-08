@@ -7,8 +7,8 @@ dependencies:
 
 devDependencies:
   '@mutoe/eslint-config-preset-vue':
-    specifier: ~2.3.0
-    version: 2.3.0(eslint@8.38.0)(typescript@5.0.4)(vue@3.2.47)
+    specifier: ~3.0.0
+    version: 3.0.0(eslint@8.38.0)(typescript@5.0.4)(vue@3.2.47)
   '@testing-library/cypress':
     specifier: ^9.0.0
     version: 9.0.0(cypress@12.9.0)
@@ -423,12 +423,12 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@mutoe/eslint-config-preset-basic@2.4.2(@typescript-eslint/parser@5.57.1)(eslint@8.38.0):
-    resolution: {integrity: sha512-3bC+kotwZSs6YOnK/jktQXCYMCzxZFfoovSlwHGC/Y6EOJ973CaNwrgdo30/6wz1MA6UqXuZldTpUA7udC8CvQ==}
+  /@mutoe/eslint-config-preset-basic@3.0.0(@typescript-eslint/parser@5.57.1)(eslint@8.38.0):
+    resolution: {integrity: sha512-NqXsHjuLTbhVOpNp7iH7oemlkCP/3/diB0t8LBe7eejNDIQWisjkcTvHFSVfCYK+5sTiR9UCd/bxJKie04tk4w==}
     peerDependencies:
       eslint: ^8
     dependencies:
-      '@mutoe/eslint-config-preset-standard': 2.4.2(@typescript-eslint/parser@5.57.1)(eslint@8.38.0)
+      '@mutoe/eslint-config-preset-standard': 3.0.0(@typescript-eslint/parser@5.57.1)(eslint@8.38.0)
       eslint: 8.38.0
       eslint-plugin-html: 7.1.0
       eslint-plugin-jsonc: 2.7.0(eslint@8.38.0)
@@ -443,8 +443,8 @@ packages:
       - supports-color
     dev: true
 
-  /@mutoe/eslint-config-preset-standard@2.4.2(@typescript-eslint/parser@5.57.1)(eslint@8.38.0):
-    resolution: {integrity: sha512-wQeKEFqFXWE9Fkjyl7iT6V0ycZt3t+QK0uc+uEAwmFcuNd28bAhDZb/2cJwwj+TgfA59EidIkz7qtt9VXYILKw==}
+  /@mutoe/eslint-config-preset-standard@3.0.0(@typescript-eslint/parser@5.57.1)(eslint@8.38.0):
+    resolution: {integrity: sha512-HclCsCHnRukC0FNg78er7cP1c2Ly2d+5yCHljZbqbGsCo9kLBRTqDYaAuYgFLcuDeTZ58ouBeHCu1Sl8TdXnFg==}
     peerDependencies:
       eslint: ^8
     dependencies:
@@ -459,13 +459,13 @@ packages:
       - supports-color
     dev: true
 
-  /@mutoe/eslint-config-preset-ts@2.4.2(eslint@8.38.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-SGp9/1lSH41xV5WDLaJxjLcLYIre5IOgX1I3ZLzrz+9nJUlg1Dh3zpBOibISVXRMogquZlERDw9tBBpZ9AZaVA==}
+  /@mutoe/eslint-config-preset-ts@3.0.0(eslint@8.38.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-6Yl1zjBuqqc0nJg3Lp5iUITzV7CrOnpcl04VkvroWV3SG60ED3LhNhLRTxf97PRaQN0Olk5HUDbJOFLGu++2wA==}
     peerDependencies:
       eslint: ^8
       typescript: '>=3.9'
     dependencies:
-      '@mutoe/eslint-config-preset-basic': 2.4.2(@typescript-eslint/parser@5.57.1)(eslint@8.38.0)
+      '@mutoe/eslint-config-preset-basic': 3.0.0(@typescript-eslint/parser@5.57.1)(eslint@8.38.0)
       '@typescript-eslint/eslint-plugin': 5.57.1(@typescript-eslint/parser@5.57.1)(eslint@8.38.0)(typescript@5.0.4)
       '@typescript-eslint/parser': 5.57.1(eslint@8.38.0)(typescript@5.0.4)
       eslint: 8.38.0
@@ -476,13 +476,13 @@ packages:
       - supports-color
     dev: true
 
-  /@mutoe/eslint-config-preset-vue@2.3.0(eslint@8.38.0)(typescript@5.0.4)(vue@3.2.47):
-    resolution: {integrity: sha512-EXXZHNm02IohYjTt79VW6IvIPvycBg1MFdXstAaGyCxnpPGEZtdFXr35fkPeveFKZxTuZbS0TxX0FmoMZa0XPw==}
+  /@mutoe/eslint-config-preset-vue@3.0.0(eslint@8.38.0)(typescript@5.0.4)(vue@3.2.47):
+    resolution: {integrity: sha512-Vd+REFV8t2T8JsLohLZfdS+e+rWRW79kC9i5tUvyUK+q42QZWB8vjDVSn9FymwC934olvZrQo5AFTQOqwStegw==}
     peerDependencies:
       eslint: ^8
       vue: ^3
     dependencies:
-      '@mutoe/eslint-config-preset-ts': 2.4.2(eslint@8.38.0)(typescript@5.0.4)
+      '@mutoe/eslint-config-preset-ts': 3.0.0(eslint@8.38.0)(typescript@5.0.4)
       eslint: 8.38.0
       eslint-plugin-vue: 9.10.0(eslint@8.38.0)
       eslint-plugin-vuejs-accessibility: 2.1.0(eslint@8.38.0)

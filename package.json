@@ -28,7 +28,7 @@
     "vue": "^3.2.47"
   },
   "devDependencies": {
-    "@mutoe/eslint-config-preset-vue": "~2.3.0",
+    "@mutoe/eslint-config-preset-vue": "~3.0.0",
     "@testing-library/cypress": "^9.0.0",
     "@types/node": "^18.15.11",
     "@vitejs/plugin-vue": "^4.1.0",
