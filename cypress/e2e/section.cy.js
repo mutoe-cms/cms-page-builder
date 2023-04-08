@@ -22,6 +22,7 @@ describe('# Section', () => {
       .trigger('dragstart')
     cy.get('.section-container > section:nth-child(3)')
       .trigger('dragover', 'bottom')
+    cy.get('.section-container > section:nth-child(3)')
       .trigger('dragend', 'bottom')
   })
 })

@@ -23,20 +23,20 @@ describe('# Modal', () => {
   })
 
   it('should can be move and resize', () => {
-    cy.get('.modal header')
-      .trigger('mousedown')
-      .trigger('mousemove', { movementX: 100, movementY: 100 })
-      .trigger('mouseup', { eventConstructor: 'MouseEvent' })
+    cy.get('.modal header').as('moveHandler')
+    cy.get('@moveHandler').trigger('mousedown')
+    cy.get('@moveHandler').trigger('mousemove', { movementX: 100, movementY: 100 })
+    cy.get('@moveHandler').trigger('mouseup', { eventConstructor: 'MouseEvent' })
 
     cy.get('.modal').should(([el]) => {
       const style = getComputedStyle(el)
       expect(Number.parseInt(style.bottom)).to.equal(0)
     })
 
-    cy.get('.modal .resize-handle')
-      .trigger('mousedown', { force: true })
-      .trigger('mousemove', { movementX: 300, movementY: -300, force: true })
-      .trigger('mouseup', { eventConstructor: 'MouseEvent', force: true })
+    cy.get('.modal .resize-handle').as('resizeHandler')
+    cy.get('@resizeHandler').trigger('mousedown', { force: true })
+    cy.get('@resizeHandler').trigger('mousemove', { movementX: 300, movementY: -300, force: true })
+    cy.get('@resizeHandler').trigger('mouseup', { eventConstructor: 'MouseEvent', force: true })
 
     cy.get('.modal').should(([el]) => {
       const style = getComputedStyle(el)
@@ -52,14 +52,16 @@ describe('# Modal', () => {
   })
 
   it('should remember last position', () => {
-    cy.get('.modal header')
-      .trigger('mousedown')
-      .trigger('mousemove', { movementX: 100, movementY: 100 })
-      .trigger('mouseup', { eventConstructor: 'MouseEvent' })
-    cy.get('.modal .resize-handle')
-      .trigger('mousedown', { force: true })
-      .trigger('mousemove', { movementX: 300, movementY: -300, force: true })
-      .trigger('mouseup', { eventConstructor: 'MouseEvent', force: true })
+    cy.get('.modal header').as('moveHandler')
+    cy.get('@moveHandler').trigger('mousedown')
+    cy.get('@moveHandler').trigger('mousemove', { movementX: 100, movementY: 100 })
+    cy.get('@moveHandler').trigger('mouseup', { eventConstructor: 'MouseEvent' })
+
+    cy.get('.modal .resize-handle').as('resizeHandler')
+    cy.get('@resizeHandler').trigger('mousedown', { force: true })
+    cy.get('@resizeHandler').trigger('mousemove', { movementX: 300, movementY: -300, force: true })
+    cy.get('@resizeHandler').trigger('mouseup', { eventConstructor: 'MouseEvent', force: true })
+
     cy.findByRole('button', { name: 'Close modal' }).click()
     cy.openModal()
 
