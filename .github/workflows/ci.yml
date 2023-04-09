@@ -28,10 +28,11 @@ jobs:
       - name: serve static page
         run: pnpm start &
 
-      - uses: cypress-io/github-action@v2
+      - uses: cypress-io/github-action@v5
 
       - name: Setup github pages
         run: echo > public/.nojekyll
+
       - name: Deploy to github pages
         uses: s0/git-publish-subdir-action@master
         env:
