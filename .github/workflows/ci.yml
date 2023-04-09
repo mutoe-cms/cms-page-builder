@@ -1,4 +1,4 @@
-name: Node CI
+name: Continuous integration
 
 on: [ push ]
 
@@ -6,7 +6,7 @@ env:
   CI: true
 
 jobs:
-  test:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,25 +18,58 @@ jobs:
         with:
           node-version: 18.x
           cache: pnpm
-
       - run: pnpm install
 
       - run: pnpm lint
-      - run: pnpm test
+      - run: pnpm type-check
+      - run: pnpm test:unit
 
-      - run: pnpm build
-      - name: serve static page
-        run: pnpm start &
+  componsent-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: pnpm
+      - run: pnpm install
 
+      - run: pnpm test:component
+
+  e2e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: pnpm
+      - run: pnpm install
+
+      # TODO: add more environment and OS e2e test
+      # https://github.com/cypress-io/cypress-realworld-app/blob/e84356f5efca9126c9f316d0e9cc36a587fca863/.github/workflows/main.yml#L1
       - uses: cypress-io/github-action@v5
+        with:
+          build: pnpm build
+          start: pnpm serve
+          config: baseUrl=http://localhost:4173
 
-      - name: Setup github pages
-        run: echo > public/.nojekyll
-
-      - name: Deploy to github pages
-        uses: s0/git-publish-subdir-action@master
-        env:
-          REPO: self
-          BRANCH: gh-pages
-          FOLDER: public
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# TODO: split CD after test success
+#      - name: Setup github pages
+#        run: echo > public/.nojekyll
+#
+#      - name: Deploy to github pages
+#        uses: s0/git-publish-subdir-action@master
+#        env:
+#          REPO: self
+#          BRANCH: gh-pages
+#          FOLDER: public
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

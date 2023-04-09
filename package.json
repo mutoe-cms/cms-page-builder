@@ -13,7 +13,7 @@
     "prepare": "husky install",
     "preversion": "pnpm lint && pnpm type-check && pnpm test",
     "version": "pnpm run changelog && git add CHANGELOG.md",
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint .",
